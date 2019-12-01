@@ -22,8 +22,8 @@ namespace Szakdolgozat.ViewModel.Controls
                 if(_selected != value)
                 {
                     _selected = value;
-                    OnPropertyChanged("Selected");
                     SelectedChanged?.Invoke(this, null);
+                    OnPropertyChanged("Selected");
                 }
             }
         }

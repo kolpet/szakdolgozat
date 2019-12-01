@@ -49,7 +49,6 @@ namespace Szakdolgozat.Model
 
         public void Randomize()
         {
-            //TODO: Clean this up
             Random random = new Random();
             foreach(int key in Context.Priorities.Keys.ToList())
             {

@@ -48,25 +48,29 @@ namespace Szakdolgozat.ViewModel.Pages
             if(_model.GetContext.ParticipantsChanged)
             {
                 _model.Initialize();
+                RefreshGrid();
+            }
+        }
 
-                PreferenceGrid.Clear();
-                ParticipantList.Clear();
-                List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
-                for(int i = 0; i < PreferenceGridRows; i++)
+        private void RefreshGrid()
+        {
+            PreferenceGrid.Clear();
+            ParticipantList.Clear();
+            List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
+            for(int i = 0; i < PreferenceGridRows; i++)
+            {
+                ParticipantList.Add(preferenceList[i].ID);
+
+                for(int j = 0; j < PreferenceGridColumns; j++)
                 {
-                    ParticipantList.Add(preferenceList[i].ID);
-
-                    for(int j = 0; j < PreferenceGridColumns; j++)
+                    PreferenceGrid.Add(new PreferenceCell()
                     {
-                        PreferenceGrid.Add(new PreferenceCell()
-                        {
-                            X = j,
-                            Y = i,
-                            Preferences = preferenceList[i].Preferences,
-                            Selected = j
-                        });
-                        PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
-                    }
+                        X = j,
+                        Y = i,
+                        Preferences = preferenceList[i].Preferences,
+                        Selected = j
+                    });
+                    PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
                 }
             }
         }
@@ -80,10 +84,7 @@ namespace Szakdolgozat.ViewModel.Pages
         private void OnRandomizeCommand()
         {
             _model.Randomize();
-            List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
-            for(int i = 0; i < PreferenceGridRows; i++)
-                for(int j = 0; j < PreferenceGridColumns; j++)
-                    PreferenceGrid[i * PreferenceGridColumns + j].Selected = preferenceList[i].Preferences[j];
+            RefreshGrid();
             OnPropertyChanged("PreferenceGrid");
 
         }
