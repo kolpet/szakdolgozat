@@ -72,9 +72,9 @@ namespace Szakdolgozat.Model
             {
                 GeneticSettings newSettings = new GeneticSettings
                 {
-                    SelectionRate = settings.SelectionRate,
-                    AbsoluteSelection = settings.AbsoluteSelection,
-                    MutationChance = settings.MutationChance,
+                    SelectionRate = settings.SelectionRate / 100,
+                    AbsoluteSelection = settings.AbsoluteSelection / 100,
+                    MutationChance = settings.MutationChance / 100,
                     StablePairWeight = settings.StablePairWeight,
                     GroupHappinessWeight = settings.GroupHappinessWeight,
                     EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,

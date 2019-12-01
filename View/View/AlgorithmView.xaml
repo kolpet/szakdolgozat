@@ -65,7 +65,7 @@
                                                         Margin="10">
                                                 <TextBlock Text="Gale-Shapley Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
                                                 <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
-                                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="150" Height="20"
+                                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="20"
                                                          VerticalAlignment="Bottom"/>
                                                 <Button x:Name="deleteGaleShapley"
                                                         Width="75"
@@ -96,7 +96,7 @@
                                                             Margin="10">
                                                     <TextBlock Text="Genetikus Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
                                                     <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
-                                                    <TextBox Text="{Binding Name, Mode=TwoWay}" Width="150" Height="20"
+                                                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="20"
                                                              VerticalAlignment="Bottom"/>
                                                     <Button x:Name="deleteGenetic"
                                                         HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -109,21 +109,21 @@
                                                 <StackPanel Grid.Row="1" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Abszolút szelekció (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding AbsoluteSelection, Mode=TwoWay}"
+                                                    <TextBox Text="{Binding AbsoluteSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              Width="50" Margin="10">
                                                     </TextBox>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Szelekció (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding SelectionRate, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding SelectionRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="3" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Mutáció esélye (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding MutationChance, Mode=TwoWay}"
+                                                    <TextBox Text="{Binding MutationChance, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
@@ -131,21 +131,21 @@
                                                 <StackPanel Grid.Row="1" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Stabil Párok súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding StablePairWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding StablePairWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Boldogság súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding GroupHappinessWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding GroupHappinessWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="3" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Egyenlő boldogság súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding EgalitarianHappinessWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding EgalitarianHappinessWeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
@@ -153,14 +153,14 @@
                                                 <StackPanel Grid.Row="1" Grid.Column="2"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Kezdő populáció méret:" Margin="10"/>
-                                                    <TextBox Text="{Binding Size, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding Size, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="NumberValidationTextBox"
                                                              Width="70" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="2"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Generációk:" Margin="10"/>
-                                                    <TextBox Text="{Binding Generations, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding Generations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
                                                              TextInput="NumberValidationTextBox"
                                                              Width="70" Margin="10"/>
                                                 </StackPanel>

@@ -75,7 +75,6 @@ namespace Szakdolgozat.ViewModel.Pages
                 _model.GetContext.Algorithms.Last().Name,
                 AlgorithmOptions.Count()
             );
-            alg.Changed += new EventHandler<AlgorithmOptionChangedEventArgs>(AlgorithmOption_Changed);
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
@@ -91,6 +90,7 @@ namespace Szakdolgozat.ViewModel.Pages
                 AlgorithmOptions.Count(),
                 settings
             );
+            alg.Changed += new EventHandler<AlgorithmOptionChangedEventArgs>(AlgorithmOption_Changed);
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
@@ -109,9 +109,6 @@ namespace Szakdolgozat.ViewModel.Pages
 
             if(settings != null)
             { 
-                settings.SelectionRate /= 100;
-                settings.AbsoluteSelection /= 100;
-                settings.MutationChance /= 100;
                 IGeneticSettings newSettings = _model.UpdateAlgorithm(index, settings);
 
                 if(settings != newSettings)
@@ -171,10 +168,6 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             try
             {
-                foreach(AlgorithmOptionBase algPanel in AlgorithmOptions)
-                {
-                    OnUpdateCommand(algPanel.Index);
-                }
                 NextPage?.Invoke(this, null);
             }
             catch(Exception)

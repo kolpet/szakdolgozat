@@ -43,6 +43,7 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             if(_model.GetContext.AlgorithmsChanged)
             {
+                _model.Initialize();
                 Results.Clear();
                 for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
                 {
