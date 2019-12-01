@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Szakdolgozat.Model.Structures;
+﻿using Szakdolgozat.ViewModel.Controls;
 
 namespace Szakdolgozat.ViewModel.Structures
 {
     public interface IAlgorithmOptionElement
     {
-        GeneticSettings AcceptGetGeneticSettings(IAlgorithmOptionVisitor visitor);
+        AlgorithmOptionGenetic AcceptGetGeneticOption(IAlgorithmOptionVisitor visitor);
 
-        void AcceptSetGeneticSettings(IAlgorithmOptionVisitor visitor, GeneticSettings settings);
+        void AcceptReduceIndex(IAlgorithmOptionVisitor visitor);
     }
 }

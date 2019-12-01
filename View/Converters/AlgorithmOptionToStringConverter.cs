@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Szakdolgozat.ViewModel.Structures;
+using Szakdolgozat.ViewModel.Controls;
 
 namespace Szakdolgozat.View.Converters
 {

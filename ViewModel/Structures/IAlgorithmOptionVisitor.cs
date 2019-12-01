@@ -5,16 +5,12 @@ namespace Szakdolgozat.ViewModel.Structures
 {
     public interface IAlgorithmOptionVisitor
     {
-        GeneticSettings GetGeneticSettings(AlgorithmOptionPanel panel);
+        AlgorithmOptionGenetic GetGeneticOption(IAlgorithmOptionElement element);
 
-        GeneticSettings GetGeneticSettings(AlgorithmOptionGenetic element);
+        AlgorithmOptionGenetic GetGeneticOption(AlgorithmOptionGenetic element);
 
-        GeneticSettings GetGeneticSettings(AlgorithmOptionGaleShapley element);
+        AlgorithmOptionGenetic GetGeneticOption(AlgorithmOptionGaleShapley element);
 
-        void SetGeneticSettings(AlgorithmOptionPanel panel, GeneticSettings settings);
-
-        void SetGeneticSettings(AlgorithmOptionGenetic element, GeneticSettings settings);
-
-        void SetGeneticSettings(AlgorithmOptionGaleShapley element, GeneticSettings settings);
+        void ReduceIndex(IAlgorithmOptionElement element);
     }
 }

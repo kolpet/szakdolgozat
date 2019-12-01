@@ -65,12 +65,13 @@
                                                         Margin="10">
                                                 <TextBlock Text="Gale-Shapley Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
                                                 <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
-                                                <TextBox Text="{Binding AlgorithmOption.Name, Mode=TwoWay}" Width="150" Height="20"
+                                                <TextBox Text="{Binding Name, Mode=TwoWay}" Width="150" Height="20"
                                                          VerticalAlignment="Bottom"/>
                                                 <Button x:Name="deleteGaleShapley"
                                                         Width="75"
                                                         Content="Törlés"
-                                                        Command="{Binding DeleteCommand}" CommandParameter="{Binding Index}"/>          
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                                    Path=DataContext.DeleteAlgorithmCommand}" CommandParameter="{Binding Index}"/>          
                                             </StackPanel>
                                         </DataTemplate>
 
@@ -95,33 +96,34 @@
                                                             Margin="10">
                                                     <TextBlock Text="Genetikus Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
                                                     <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.Name, Mode=TwoWay}" Width="150" Height="20"
+                                                    <TextBox Text="{Binding Name, Mode=TwoWay}" Width="150" Height="20"
                                                              VerticalAlignment="Bottom"/>
                                                     <Button x:Name="deleteGenetic"
                                                         HorizontalAlignment="Right" VerticalAlignment="Center"
                                                         Width="75"
                                                         Content="Törlés"
-                                                        Command="{Binding DeleteCommand}" CommandParameter="{Binding Index}"/>
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                                    Path=DataContext.DeleteAlgorithmCommand}" CommandParameter="{Binding Index}"/>
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Row="1" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Abszolút szelekció (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.AbsoluteSelection, Mode=TwoWay}"
+                                                    <TextBox Text="{Binding AbsoluteSelection, Mode=TwoWay}"
                                                              Width="50" Margin="10">
                                                     </TextBox>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Szelekció (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.SelectionRate, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding SelectionRate, Mode=TwoWay}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="3" Grid.Column="0"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Mutáció esélye (%):" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.MutationChance, Mode=TwoWay}"
+                                                    <TextBox Text="{Binding MutationChance, Mode=TwoWay}"
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
@@ -129,21 +131,21 @@
                                                 <StackPanel Grid.Row="1" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Stabil Párok súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.StablePairWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding StablePairWeight, Mode=TwoWay}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Boldogság súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.GroupHappinessWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding GroupHappinessWeight, Mode=TwoWay}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="3" Grid.Column="1"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Egyenlő boldogság súly:" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.EgalitarianHappinessWeight, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding EgalitarianHappinessWeight, Mode=TwoWay}"  
                                                              TextInput="DoubleValidationTextBox"
                                                              Width="50" Margin="10"/>
                                                 </StackPanel>
@@ -151,24 +153,17 @@
                                                 <StackPanel Grid.Row="1" Grid.Column="2"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Kezdő populáció méret:" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.Size, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding Size, Mode=TwoWay}"  
                                                              TextInput="NumberValidationTextBox"
                                                              Width="70" Margin="10"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Row="2" Grid.Column="2"
                                                             Orientation="Horizontal" HorizontalAlignment="Right">
                                                     <TextBlock Text="Generációk:" Margin="10"/>
-                                                    <TextBox Text="{Binding AlgorithmOption.Generations, Mode=TwoWay}"  
+                                                    <TextBox Text="{Binding Generations, Mode=TwoWay}"  
                                                              TextInput="NumberValidationTextBox"
                                                              Width="70" Margin="10"/>
                                                 </StackPanel>
-                                                
-                                                <Button Grid.Row="3" Grid.Column="2"
-                                                        x:Name="updateGenetic"
-                                                        HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                        Width="75" Margin="10"
-                                                        Content="Ellenőrzés"
-                                                        Command="{Binding UpdateCommand}" CommandParameter="{Binding Index}"/>
                                             </Grid>
                                         </DataTemplate>
                                     </ContentPresenter.Resources>
@@ -176,10 +171,10 @@
                                     <ContentPresenter.Style>
                                         <Style TargetType="{x:Type ContentPresenter}">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding AlgorithmOption,Converter={StaticResource AlgorithmOptionToStringConverter}}" Value="galeshapley">
+                                                <DataTrigger Binding="{Binding .,Converter={StaticResource AlgorithmOptionToStringConverter}}" Value="galeshapley">
                                                     <Setter Property="ContentTemplate" Value="{StaticResource galeshapley}" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding AlgorithmOption,Converter={StaticResource AlgorithmOptionToStringConverter}}" Value="genetic">
+                                                <DataTrigger Binding="{Binding .,Converter={StaticResource AlgorithmOptionToStringConverter}}" Value="genetic">
                                                     <Setter Property="ContentTemplate" Value="{StaticResource genetic}" />
                                                 </DataTrigger>
                                             </Style.Triggers>

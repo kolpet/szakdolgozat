@@ -70,6 +70,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{9edd25c0-a05d-45cc-ae3a-e45ce67b077d}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{838e57bf-e097-4d84-aa6e-b4d8717a334c}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
+      <Project>{c9b72b34-6d82-4232-9c22-1925ca1a4ea6}</Project>
+      <Name>ViewModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\View\View.csproj">
       <Project>{dea7efb0-9ef6-4935-b3fa-c03b6a97e1c1}</Project>
       <Name>View</Name>

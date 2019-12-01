@@ -3,7 +3,7 @@
     /// <summary>
     /// Settings for the genetic algorithm
     /// </summary>
-    public class GeneticSettings : ISettings
+    public class GeneticSettings : IGeneticSettings
     {
         private double _absoluteSelection;
 

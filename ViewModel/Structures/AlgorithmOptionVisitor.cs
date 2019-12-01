@@ -8,34 +8,24 @@ namespace Szakdolgozat.ViewModel.Structures
 {
     public class AlgorithmOptionVisitor : IAlgorithmOptionVisitor
     {
-        public GeneticSettings GetGeneticSettings(AlgorithmOptionPanel panel)
+        public AlgorithmOptionGenetic GetGeneticOption(IAlgorithmOptionElement element)
         {
-            return panel.AlgorithmOption.AcceptGetGeneticSettings(this);
+            return element.AcceptGetGeneticOption(this);
         }
 
-        public GeneticSettings GetGeneticSettings(AlgorithmOptionGenetic element)
+        public AlgorithmOptionGenetic GetGeneticOption(AlgorithmOptionGenetic element)
         {
-            return element.Settings;
+            return element;
         }
 
-        public GeneticSettings GetGeneticSettings(AlgorithmOptionGaleShapley element)
+        public AlgorithmOptionGenetic GetGeneticOption(AlgorithmOptionGaleShapley element)
         {
             return null;
         }
 
-        public void SetGeneticSettings(AlgorithmOptionPanel panel, GeneticSettings settings)
+        public void ReduceIndex(IAlgorithmOptionElement element)
         {
-            panel.AlgorithmOption.AcceptSetGeneticSettings(this, settings);
-        }
-
-        public void SetGeneticSettings(AlgorithmOptionGenetic element, GeneticSettings settings)
-        {
-            element.Settings = settings;
-        }
-
-        public void SetGeneticSettings(AlgorithmOptionGaleShapley element, GeneticSettings settings)
-        {
-            //Nothing
+            element.AcceptReduceIndex(this);
         }
     }
 }

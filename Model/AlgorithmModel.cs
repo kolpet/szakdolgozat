@@ -10,8 +10,6 @@ namespace Szakdolgozat.Model
 {
     public class AlgorithmModel : ModelBase
     {
-        public int Count { get => Context.Algorithms.Count(); }
-
         public AlgorithmModel()
         {
             Context.Algorithms = new List<AlgorithmData>();
@@ -70,15 +68,15 @@ namespace Szakdolgozat.Model
             return settings;
         }
 
-        public GeneticSettings UpdateAlgorithm(int index, GeneticSettings settings)
+        public IGeneticSettings UpdateAlgorithm(int index, IGeneticSettings settings)
         {
             if(Context.Algorithms[index].Algorithm is GeneticAlgorithm)
             {
                 GeneticSettings newSettings = new GeneticSettings
                 {
-                    SelectionRate = settings.SelectionRate / 100,
-                    AbsoluteSelection = settings.AbsoluteSelection / 100,
-                    MutationChance = settings.MutationChance / 100,
+                    SelectionRate = settings.SelectionRate,
+                    AbsoluteSelection = settings.AbsoluteSelection,
+                    MutationChance = settings.MutationChance,
                     StablePairWeight = settings.StablePairWeight,
                     GroupHappinessWeight = settings.GroupHappinessWeight,
                     EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
