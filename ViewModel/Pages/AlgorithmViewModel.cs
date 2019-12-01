@@ -53,16 +53,19 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            _model.Initialize();
-
-            AlgorithmOptions.Clear();
-            foreach(AlgorithmData data in _model.GetContext.Algorithms.ToList())
+            if(_model.GetContext.PreferencesChanged)
             {
-                AlgorithmVisitor visitor = new AlgorithmVisitor(() => OnNewGaleShapleyAlgorithmCommand(),
-                    () => OnNewGeneticAlgorithmCommand());
-                visitor.Visit(data.Element);
+                _model.Initialize();
+
+                AlgorithmOptions.Clear();
+                foreach(AlgorithmData data in _model.GetContext.Algorithms.ToList())
+                {
+                    AlgorithmVisitor visitor = new AlgorithmVisitor(() => OnNewGaleShapleyAlgorithmCommand(),
+                        () => OnNewGeneticAlgorithmCommand());
+                    visitor.Visit(data.Element);
+                }
+                OnPropertyChanged("AlgorithmOptions");
             }
-            OnPropertyChanged("AlgorithmOptions");
         }
 
         private void OnNewGaleShapleyAlgorithmCommand()

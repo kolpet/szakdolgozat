@@ -22,8 +22,6 @@ namespace Szakdolgozat.Model
         {
             _running = new List<int>();
             _tasks = new List<Task>();
-
-            Initialize();
         }
 
         public void Initialize()

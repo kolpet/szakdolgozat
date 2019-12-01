@@ -13,15 +13,13 @@ namespace Szakdolgozat.Model
         public AlgorithmModel()
         {
             Context.Algorithms = new List<AlgorithmData>();
-            Context.AlgorithmsChanged = true;
-
-            Initialize();
         }
 
         public void Initialize()
         {
             if(Context.PreferencesChanged)
             {
+                Context.AlgorithmsChanged = true;
                 Context.Algorithms.Clear();
                 UnitSet set1 = new UnitSet(Context.Participants.Where(x => x.Group == MarriageGroup.Group1).Select(x => x.ID));
                 UnitSet set2 = new UnitSet(Context.Participants.Where(x => x.Group == MarriageGroup.Group2).Select(x => x.ID));

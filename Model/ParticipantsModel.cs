@@ -11,15 +11,13 @@ namespace Szakdolgozat.Model
         public ParticipantsModel()
         {
             Context.Participants = new List<Participant>();
-            Context.ParticipantsChanged = true;
-
-            Initialize();
         }
 
         public void Initialize()
         {
             if(Context.SetupChanged)
             {
+                Context.ParticipantsChanged = true;
                 Context.Participants.Clear();
                 for(int i = 0; i < Context.GroupSize; i++)
                 {

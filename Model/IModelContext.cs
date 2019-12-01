@@ -7,6 +7,14 @@ namespace Szakdolgozat.Model
 {
     public interface IModelContext
     {
+        bool SetupChanged { get; }
+
+        bool ParticipantsChanged { get; }
+
+        bool PreferencesChanged { get; }
+
+        bool AlgorithmsChanged { get; }
+
         List<AlgorithmData> Algorithms { get; }
 
         Priorities Priorities { get;}

@@ -9,8 +9,6 @@ namespace Szakdolgozat.Model
         public SetupModel()
         {
             Context.SetupChanged = true;
-
-            Initialize();
         }
 
         public void Initialize()

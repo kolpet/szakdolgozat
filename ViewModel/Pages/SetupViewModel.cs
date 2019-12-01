@@ -80,15 +80,18 @@ namespace Szakdolgozat.ViewModel.Pages
 
             ToProjectCommand = new DelegateCommand(param => OnToProjectCommand());
             ToParticipantsCommand = new DelegateCommand(param => OnToParticipantsCommand());
-
-            Group1Name = _model.GetContext.Group1Name;
-            Group2Name = _model.GetContext.Group1Name;
-            ParticipantNumber = _model.GetContext.TotalSize;
         }
 
         public void RefreshPage()
         {
             _model.Initialize();
+
+            Group1Name = _model.GetContext.Group1Name;
+            Group2Name = _model.GetContext.Group2Name;
+            ParticipantNumber = _model.GetContext.TotalSize;
+            OnPropertyChanged("Group1Name");
+            OnPropertyChanged("Group2Name");
+            OnPropertyChanged("ParticipantNumber");
         }
 
         private void OnToProjectCommand()
@@ -98,8 +101,12 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void OnToParticipantsCommand()
         {
-            if(_model.IsValid)
-                NextPage(this, null);
+            try
+            {
+                if(_model.IsValid)
+                    NextPage?.Invoke(this, null);
+            }
+            catch { }
         }
     }
 }

@@ -19,8 +19,12 @@ namespace Szakdolgozat.ViewModel.Controls
             get => _selected;
             set
             {
-                _selected = value;
-                OnPropertyChanged("Selected");
+                if(_selected != value)
+                {
+                    _selected = value;
+                    OnPropertyChanged("Selected");
+                    SelectedChanged?.Invoke(this, null);
+                }
             }
         }
 

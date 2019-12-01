@@ -41,16 +41,19 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            Results.Clear();
-            for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
+            if(_model.GetContext.AlgorithmsChanged)
             {
-                Results.Add(new StableMarriagePanel(_model.GetContext.Algorithms[i].Name, i)
+                Results.Clear();
+                for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
                 {
-                    State = "Futtatható",
-                    Time = 0,
-                    Runable = true,
-                    Done = false,
-                });
+                    Results.Add(new StableMarriagePanel(_model.GetContext.Algorithms[i].Name, i)
+                    {
+                        State = "Futtatható",
+                        Time = 0,
+                        Runable = true,
+                        Done = false,
+                    });
+                }
             }
         }
 

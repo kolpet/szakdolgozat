@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Szakdolgozat.Model;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
@@ -44,25 +45,28 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            _model.Initialize();
-
-            PreferenceGrid.Clear();
-            ParticipantList.Clear();
-            List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
-            for(int i = 0; i < PreferenceGridRows; i++)
+            if(_model.GetContext.ParticipantsChanged)
             {
-                ParticipantList.Add(preferenceList[i].ID);
+                _model.Initialize();
 
-                for(int j = 0; j < PreferenceGridColumns; j++)
+                PreferenceGrid.Clear();
+                ParticipantList.Clear();
+                List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
+                for(int i = 0; i < PreferenceGridRows; i++)
                 {
-                    PreferenceGrid.Add(new PreferenceCell()
+                    ParticipantList.Add(preferenceList[i].ID);
+
+                    for(int j = 0; j < PreferenceGridColumns; j++)
                     {
-                        X = j,
-                        Y = i,
-                        Preferences = preferenceList[i].Preferences,
-                        Selected = j
-                    });
-                    PreferenceGrid[j].SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
+                        PreferenceGrid.Add(new PreferenceCell()
+                        {
+                            X = j,
+                            Y = i,
+                            Preferences = preferenceList[i].Preferences,
+                            Selected = j
+                        });
+                        PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
+                    }
                 }
             }
         }
@@ -76,7 +80,12 @@ namespace Szakdolgozat.ViewModel.Pages
         private void OnRandomizeCommand()
         {
             _model.Randomize();
-            RefreshPage();
+            List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
+            for(int i = 0; i < PreferenceGridRows; i++)
+                for(int j = 0; j < PreferenceGridColumns; j++)
+                    PreferenceGrid[i * PreferenceGridColumns + j].Selected = preferenceList[i].Preferences[j];
+            OnPropertyChanged("PreferenceGrid");
+
         }
 
         private void OnToParticipantsCommand()

@@ -24,7 +24,7 @@ namespace Szakdolgozat.ViewModel
 
         public DelegateCommand LoadCommand { get; private set; }
 
-        public AppViewModel(): this(1)
+        public AppViewModel(): this(0)
         {
 
         }
@@ -32,6 +32,7 @@ namespace Szakdolgozat.ViewModel
         public AppViewModel(int defaultPage)
         {
             _appModel = new AppModel(new TextFilePersistence(null));
+            _pages = new List<IPageTurn>();
 
             NewCommand = new DelegateCommand(param => OnNewCommand());
             SaveCommand = new DelegateCommand(param => OnSave());
@@ -44,9 +45,7 @@ namespace Szakdolgozat.ViewModel
         }
 
         public void NewProject(int defaultPage)
-        {
-            _pages = new List<IPageTurn>();
-
+        { 
             ProjectViewModel projectViewModel = new ProjectViewModel();
             SetupViewModel setupViewModel = new SetupViewModel();
             ParticipantsViewModel participantsViewModel = new ParticipantsViewModel();
@@ -54,6 +53,7 @@ namespace Szakdolgozat.ViewModel
             AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel();
             RunViewModel runViewModel = new RunViewModel();
 
+            _pages.Clear();
             _pages.Add(projectViewModel);
             _pages.Add(setupViewModel);
             _pages.Add(participantsViewModel);

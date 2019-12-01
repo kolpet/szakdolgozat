@@ -10,15 +10,13 @@ namespace Szakdolgozat.Model
         public PreferencesModel()
         {
             Context.Priorities = new Priorities(new Dictionary<int, UnitSet>());
-            Context.PreferencesChanged = true;
-
-            Initialize();
         }
 
         public void Initialize()
         {
             if(Context.ParticipantsChanged)
             {
+                Context.PreferencesChanged = true;
                 Context.Priorities.Clear();
                 foreach(Participant participant in Context.Group1Participants)
                 {
