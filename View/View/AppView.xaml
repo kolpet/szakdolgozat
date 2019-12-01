@@ -1,0 +1,91 @@
+﻿<Window x:Class="Szakdolgozat.View.AppView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:pages="clr-namespace:Szakdolgozat.ViewModel.Pages;assembly=ViewModel"
+        xmlns:local="clr-namespace:Szakdolgozat.View"
+        Title="Stabil házasítás" Height="600" Width="800" MinHeight="300" MinWidth="600">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type pages:ProjectViewModel}">
+            <local:ProjectView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pages:SetupViewModel}">
+            <local:SetupView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pages:ParticipantsViewModel}">
+            <local:ParticipantsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pages:PreferencesViewModel}">
+            <local:PreferencesView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pages:AlgorithmViewModel}">
+            <local:AlgorithmView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type pages:RunViewModel}">
+            <local:RunView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCommand}" />
+        <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding LoadCommand}" />
+    </Window.InputBindings>
+
+    <DockPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        <!--<Border DockPanel.Dock="Left" BorderBrush="Black" BorderThickness="0,0,2,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <ItemsControl ItemsSource="{Binding Pages}" Grid.Row="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Name}"
+                            IsEnabled="{Binding Enabled }"
+                            Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                            CommandParameter="{Binding }"
+                            Margin="2,5"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button Content="Mentés" Grid.Row="1" Margin="2,5"
+                        Command="{Binding SaveCommand}" />
+                <Button Content="Mentés Mint..." Grid.Row="2" Margin="2,5"
+                        Command="{Binding SaveAsCommand}" />
+                <Button Content="Betöltés" Grid.Row="3" Margin="2,5"
+                        Command="{Binding LoadCommand}" />
+            </Grid>
+        </Border> -->
+            
+            <Menu Grid.Row="0">
+                <MenuItem Header="Fájl">
+                    <MenuItem Header="Új" Command="{Binding NewCommand}" />
+                    <Separator/>
+                    <MenuItem Header="Mentés" Command="{Binding SaveCommand}" />
+                    <MenuItem Header="Mentés másként" Command="{Binding SaveAsCommand}" />
+                    <MenuItem Header="Betöltés" Command="{Binding LoadCommand}" />
+                </MenuItem>
+                <!--<ItemsControl ItemsSource="{Binding Pages}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Name}"
+                                        IsEnabled="{Binding Enabled}"
+                                        Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding }"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>-->
+            </Menu>
+            
+            <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" />
+        </Grid>
+    </DockPanel>
+</Window>

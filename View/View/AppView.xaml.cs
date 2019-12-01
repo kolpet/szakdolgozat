@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Szakdolgozat
+namespace Szakdolgozat.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AppView : Window
     {
-        public MainWindow()
+        public AppView()
         {
             InitializeComponent();
         }
