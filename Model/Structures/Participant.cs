@@ -1,6 +1,6 @@
 ﻿namespace Szakdolgozat.Model.Structures
 {
-    public class Participant : IParticipant
+    public class Participant
     {
         public Participant(int id, string name, MarriageGroup group)
         {
