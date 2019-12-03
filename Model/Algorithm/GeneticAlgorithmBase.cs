@@ -6,12 +6,16 @@ using Szakdolgozat.Model.Structures;
 
 namespace Szakdolgozat.Model.Algorithm
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T">The type of the fitness</typeparam>
     public abstract class GeneticAlgorithmBase<T> : AlgorithmBase
     {
         /// <summary>
         /// The population of species
         /// </summary>
-        protected List<Species> _population;
+        protected List<Species<T>> _population;
 
         /// <summary>
         /// A random number generator
@@ -37,7 +41,7 @@ namespace Szakdolgozat.Model.Algorithm
         /// <summary>
         /// Solves the stable marriage problem with genetic algorithm
         /// </summary>
-        protected override void CalculateMethod()
+        protected override sealed void CalculateMethod()
         {
             Initialization();
 
@@ -54,27 +58,7 @@ namespace Szakdolgozat.Model.Algorithm
         /// Initializes the population of Species
         /// </summary>
         /// <returns>async Task</returns>
-        private void Initialization()
-        {
-            _population = new List<Species>();
-            for(int i = 0; i < Settings.Size; i++)
-            {
-                UnitSet participants1 = new UnitSet(_stableMarriage.Units1.OrderBy(x => _random.Next()));
-                UnitSet participants2 = new UnitSet(_stableMarriage.Units2.OrderBy(x => _random.Next()));
-
-                //Randomized solution
-                Solution genes = new Solution(participants1.Zip(participants2, (x, y) => new Tuple<int, int>(x, y)).ToList());
-                T fitness = CalculateFitness(genes);
-
-                _population.Add(new Species()
-                {
-                    Genes = genes,
-                    Fitness = fitness
-                });
-            }
-
-            _population.OrderByDescending(x => x.Fitness);
-        }
+        protected abstract void Initialization();
 
         /// <summary>
         /// Condition for how long should
@@ -99,21 +83,5 @@ namespace Szakdolgozat.Model.Algorithm
         /// <param name="solution">The genes</param>
         /// <returns>The fitness</returns>
         protected abstract T CalculateFitness(Solution solution);
-
-        /// <summary>                     
-        /// The Species is what the genetic algorithm produces and tries to solve the problem with
-        /// </summary>
-        protected class Species
-        {
-            /// <summary>
-            /// The "genes" are the result solution of the genetic algorithm
-            /// </summary>
-            public Solution Genes { get; set; }
-
-            /// <summary>
-            /// The fitness of the genes
-            /// </summary>
-            public T Fitness { get; set; }
-        }
     }
 }
