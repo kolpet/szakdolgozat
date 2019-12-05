@@ -142,8 +142,9 @@ namespace Szakdolgozat.Model.Algorithm
         private async Task<Species<double>> MutationAsync(Species<double> x)
         {
             await Task.Delay(0).ConfigureAwait(false);
-            Solution newGenes = x.Genes;
+            Solution newGenes = new Solution(x.Genes);
 
+            /* Reverse Mutation
             int start = _random.Next() % _stableMarriage.GroupSize;
             int end = ((_random.Next() % (_stableMarriage.GroupSize - 1)) + start + 1) % _stableMarriage.GroupSize;
             if(start > end)
@@ -160,7 +161,32 @@ namespace Szakdolgozat.Model.Algorithm
                 newGenes[end] = new Tuple<int, int>(newGenes[end].Item1, temp);
                 start++;
                 end--;
+            }*/
+
+            double selection = _random.Next() % (_stableMarriage.GroupSize - 1) + 1;
+            double rate = selection / (double)_stableMarriage.GroupSize;
+            List<int> shuffle = new List<int>();
+            if(rate > 0)
+            {
+                for(int i = 0; i < newGenes.Count; i++)
+                {
+                    if(_random.NextDouble() < rate)
+                    {
+                        shuffle.Add(newGenes[i].Item2);
+                        newGenes[i] = null;
+                    }
+                }
+                for(int i = 0; i < newGenes.Count && shuffle.Count > 0; i++)
+                {
+                    if(newGenes[i] == null)
+                    {
+                        int select = _random.Next() % shuffle.Count;
+                        newGenes[i] = new Tuple<int, int>(x.Genes[i].Item1, shuffle[select]);
+                        shuffle.RemoveAt(select);
+                    }
+                }
             }
+
             double fitness = CalculateFitness(newGenes);
             return new Species<double>()
             {
