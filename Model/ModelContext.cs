@@ -18,7 +18,7 @@ namespace Szakdolgozat.Model
         private bool _algorithmsChanged;
 
         //Hidden by interface
-        public IPersistence Persistence { get; set; }
+        public PersistenceBase Persistence { get; set; }
 
         public StableMarriage StableMarriage { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace Szakdolgozat.Model.Structures
+﻿using Szakdolgozat.Common;
+
+namespace Szakdolgozat.Model.Structures
 {
     /// <summary>
     /// Settings for the genetic algorithm

@@ -11,7 +11,7 @@ namespace Szakdolgozat.Model
 {
     public partial class AppModel : ModelBase
     {
-        public AppModel(IPersistence persistence)
+        public AppModel(PersistenceBase persistence)
         {
             Context.Persistence = persistence;
         }

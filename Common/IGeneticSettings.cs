@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Szakdolgozat.Model.Structures
+namespace Szakdolgozat.Common
 {
     public interface IGeneticSettings
     {

@@ -1,4 +1,5 @@
-﻿using Szakdolgozat.Model.Structures;
+﻿using Szakdolgozat.Common;
+using Szakdolgozat.Model.Structures;
 using Szakdolgozat.ViewModel.Structures;
 
 namespace Szakdolgozat.ViewModel.Controls

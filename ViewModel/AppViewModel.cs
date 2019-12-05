@@ -31,7 +31,7 @@ namespace Szakdolgozat.ViewModel
 
         public AppViewModel(int defaultPage)
         {
-            _appModel = new AppModel(new TextFilePersistence(null));
+            _appModel = new AppModel(new XmlFilePersistence(null));
             _pages = new List<IPageTurn>();
 
             NewCommand = new DelegateCommand(param => OnNewCommand());

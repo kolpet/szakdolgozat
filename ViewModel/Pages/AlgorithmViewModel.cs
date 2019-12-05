@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Algorithm;
 using Szakdolgozat.Model.Structures;
