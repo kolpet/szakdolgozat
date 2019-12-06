@@ -12,6 +12,8 @@ namespace Szakdolgozat.Model
 {
     public partial class AppModel : ModelBase
     {
+        public bool IsSaved { get => Context.Persistence.Saved; }
+
         public AppModel(PersistenceBase persistence)
         {
             Context.Persistence = persistence;

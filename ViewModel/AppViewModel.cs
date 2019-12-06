@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Windows;
+using Microsoft.Win32;
 using System.Collections.Generic;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Pages;
 using Szakdolgozat.ViewModel.Structures;
+using System.IO;
 
 namespace Szakdolgozat.ViewModel
 {
@@ -135,12 +138,27 @@ namespace Szakdolgozat.ViewModel
 
         private void OnSave()
         {
-
+            if(_appModel.IsSaved)
+            {
+                _appModel.SaveData();
+            }
+            else
+            {
+                OnSaveAs();
+            }
         }
 
         private void OnSaveAs()
         {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "Fájl mentése...";
+            saveFileDialog.Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs";
+            saveFileDialog.ShowDialog();
 
+            if(saveFileDialog.FileName != "")
+            {
+                _appModel.SaveAsData(Path.GetFullPath(saveFileDialog.FileName));
+            }
         }
 
         private void OnLoad()
