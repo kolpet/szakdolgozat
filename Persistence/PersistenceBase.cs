@@ -19,6 +19,7 @@ namespace Szakdolgozat.Persistence
 
         public PersistenceBase(string path)
         {
+            FilePath = path;
             Saved = true;
         }
 

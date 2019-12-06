@@ -6,6 +6,8 @@ namespace Szakdolgozat.Model.Algorithm
 {
     public interface IAlgorithmVisitor
     {
+        void Visit(IAlgorithmElement element);
+
         void Visit(GaleShapleyAlgorithm element);
 
         void Visit(GeneticAlgorithm element);

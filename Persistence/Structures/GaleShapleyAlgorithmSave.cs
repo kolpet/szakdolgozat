@@ -5,8 +5,7 @@ using System.Text;
 namespace Szakdolgozat.Persistence.Structures
 {
     [Serializable]
-    public abstract class AlgorithmSaveBase
+    public class GaleShapleyAlgorithmSave : AlgorithmSaveBase
     {
-        public string AlgorithmName;
     }
 }

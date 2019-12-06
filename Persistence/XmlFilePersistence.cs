@@ -7,6 +7,10 @@ namespace Szakdolgozat.Persistence
 {
     public class XmlFilePersistence : PersistenceBase
     {
+        public XmlFilePersistence() : base() { }
+
+        public XmlFilePersistence(string path) : base(path) { }
+
         protected override void SaveFile(SaveData data)
         {
             string path = Path.Combine(FilePath, ".xml");

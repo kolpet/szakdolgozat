@@ -7,7 +7,7 @@ namespace Szakdolgozat.Persistence
     [Serializable]
     public class SaveData
     {
-        public List<IAlgorithmSave> Algorithms;
+        public List<AlgorithmSaveBase> Algorithms;
 
         public Dictionary<int, List<int>> Preferences;
 

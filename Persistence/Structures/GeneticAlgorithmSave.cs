@@ -5,8 +5,23 @@ using Szakdolgozat.Common;
 
 namespace Szakdolgozat.Persistence.Structures
 {
-    public class GeneticAlgorithmSave : AlgorithmSaveBase
+    [Serializable]
+    public class GeneticAlgorithmSave : AlgorithmSaveBase, IGeneticSettings
     {
-        public IGeneticSettings Settings;
+        public double AbsoluteSelection { get; set; }
+
+        public double SelectionRate { get; set; }
+
+        public double MutationChance { get; set; }
+
+        public double StablePairWeight { get; set; }
+
+        public double GroupHappinessWeight { get; set; }
+
+        public double EgalitarianHappinessWeight { get; set; }
+
+        public int Size { get; set; }
+
+        public int Generations { get; set; }
     }
 }
