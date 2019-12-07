@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:Szakdolgozat.View"
              xmlns:converters="clr-namespace:Szakdolgozat.View.Converters"
+             xmlns:controls="clr-namespace:Szakdolgozat.ViewModel.Controls;assembly=ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -70,7 +71,7 @@
                                                 <Button x:Name="deleteGaleShapley"
                                                         Width="75"
                                                         Content="Törlés"
-                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
                                                                     Path=DataContext.DeleteAlgorithmCommand}" CommandParameter="{Binding Index}"/>          
                                             </StackPanel>
                                         </DataTemplate>

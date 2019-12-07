@@ -40,7 +40,7 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             _model = new AlgorithmModel();
 
-            NewGaleShapleyAlgorithmCommand = new DelegateCommand(param => OnDeleteAlgorithmCommand(Convert.ToInt32(param)));
+            DeleteAlgorithmCommand = new DelegateCommand(param => OnDeleteAlgorithmCommand(Convert.ToInt32(param)));
             NewGaleShapleyAlgorithmCommand = new DelegateCommand(param => OnNewGaleShapleyAlgorithmCommand());
             NewGeneticAlgorithmCommand = new DelegateCommand(param => OnNewGeneticAlgorithmCommand());
             ToPreferencesCommand = new DelegateCommand(param => OnToPreferencesCommand());
@@ -59,6 +59,7 @@ namespace Szakdolgozat.ViewModel.Pages
             }
 
             AlgorithmOptions.Clear();
+            AlgorithmElements.Clear();
             for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
             {
                 AlgorithmData data = _model.GetContext.Algorithms[i];
@@ -86,7 +87,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void RefreshGenetic(string name, int index, GeneticSettings settings)
         {
-            AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(name, index, settings);
+            AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(name, index, ConvertToViewModelSettings(settings));
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
@@ -103,23 +104,23 @@ namespace Szakdolgozat.ViewModel.Pages
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
-            UpdateGeneticSettings(alg.Index);
+            //UpdateGeneticSettings(alg.Index);
             OnPropertyChanged("AlgorithmOptions");
         }
 
         private void OnNewGeneticAlgorithmCommand()
         {
-            GeneticSettings settings = _model.CreateGeneticAlgorithm();
+            IGeneticSettings settings = _model.CreateGeneticAlgorithm();
             AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(
                 _model.GetContext.Algorithms.Last().Name,
                 AlgorithmOptions.Count(),
-                settings
+                ConvertToViewModelSettings(settings)
             );
             alg.Changed += new EventHandler<AlgorithmOptionChangedEventArgs>(AlgorithmOption_Changed);
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
-            UpdateGeneticSettings(alg.Index);
+            //UpdateGeneticSettings(alg.Index);
             OnPropertyChanged("AlgorithmOptions");
         }
 
@@ -128,30 +129,57 @@ namespace Szakdolgozat.ViewModel.Pages
             UpdateGeneticSettings(e.Index);
         }
 
+        private IGeneticSettings ConvertToViewModelSettings(IGeneticSettings settings)
+        {
+            IGeneticSettings newSettings = new Settings
+            {
+                AbsoluteSelection = settings.AbsoluteSelection * 100,
+                SelectionRate = settings.SelectionRate * 100,
+                MutationChance = settings.MutationChance * 100,
+                StablePairWeight = settings.StablePairWeight,
+                GroupHappinessWeight = settings.GroupHappinessWeight,
+                EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
+                Generations = settings.Generations,
+                Size = settings.Size
+            };
+            return newSettings;
+        }
+
+        private IGeneticSettings ConvertToModelSettings(IGeneticSettings settings)
+        {
+            IGeneticSettings newSettings = new Settings
+            {
+                AbsoluteSelection = settings.AbsoluteSelection / 100,
+                SelectionRate = settings.SelectionRate / 100,
+                MutationChance = settings.MutationChance / 100,
+                StablePairWeight = settings.StablePairWeight,
+                GroupHappinessWeight = settings.GroupHappinessWeight,
+                EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
+                Generations = settings.Generations,
+                Size = settings.Size
+            };
+            return newSettings;
+        }
+
         private void UpdateGeneticSettings(int index)
         {
             IGeneticSettings settings = _visitor.GetGeneticOption(AlgorithmElements[index]);
 
             if(settings != null)
             { 
-                IGeneticSettings newSettings = _model.UpdateAlgorithm(index, settings);
+                IGeneticSettings newSettings = ConvertToViewModelSettings(
+                    _model.UpdateAlgorithm(index, ConvertToModelSettings(settings)));
 
                 if(settings != newSettings)
                 {
-                    settings.SelectionRate = newSettings.SelectionRate * 100;
-                    settings.AbsoluteSelection = newSettings.AbsoluteSelection * 100;
-                    settings.MutationChance = newSettings.MutationChance * 100;
+                    settings.SelectionRate = newSettings.SelectionRate;
+                    settings.AbsoluteSelection = newSettings.AbsoluteSelection;
+                    settings.MutationChance = newSettings.MutationChance;
                     settings.StablePairWeight = newSettings.StablePairWeight;
                     settings.GroupHappinessWeight = newSettings.GroupHappinessWeight;
                     settings.EgalitarianHappinessWeight = newSettings.EgalitarianHappinessWeight;
                     settings.Size = newSettings.Size;
                     settings.Generations = newSettings.Generations;
-                }
-                else
-                {
-                    settings.SelectionRate *= 100;
-                    settings.AbsoluteSelection *= 100;
-                    settings.MutationChance *= 100;
                 }
                 OnPropertyChanged("AlgorithmOptions");
             }
@@ -159,7 +187,6 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void OnDeleteAlgorithmCommand(int index)
         {
-            //TODO: Fix delete
             _model.DeleteAlgorithm(index);
             AlgorithmOptions.RemoveAt(index);
             AlgorithmElements.RemoveAt(index);
@@ -169,22 +196,6 @@ namespace Szakdolgozat.ViewModel.Pages
                 _visitor.ReduceIndex(AlgorithmElements[i]);
             }
             OnPropertyChanged("AlgorithmOptions");
-        }
-
-        private void OnUpdateCommand(int index)
-        {
-            IGeneticSettings settings = _visitor.GetGeneticOption(AlgorithmElements[index]);
-
-            if(settings != null)
-            {
-                IGeneticSettings newSettings = _model.UpdateAlgorithm(index, settings);
-
-                if(settings != newSettings)
-                {
-                    //AlgorithmOptions[index].AlgorithmOption = settings;
-                    OnPropertyChanged("AlgorithmOptions");
-                }
-            }
         }
 
         private void OnToPreferencesCommand()

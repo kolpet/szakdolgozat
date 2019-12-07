@@ -77,8 +77,7 @@ namespace Szakdolgozat.ViewModel
 
         private void Model_ErrorMessage(object sender, ModelErrorEventArgs e)
         {
-            //TODO: implement message popup
-            //MessageBox.Show(e.Message, "Hiba!");
+            MessageBox.Show(e.Message, "Hiba!");
         }
 
         private void Context_NextPage(object sender, EventArgs e)

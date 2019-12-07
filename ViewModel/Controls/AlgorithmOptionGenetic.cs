@@ -136,9 +136,9 @@ namespace Szakdolgozat.ViewModel.Controls
 
         public AlgorithmOptionGenetic(string name, int index, IGeneticSettings settings) : base(name, index)
         {
-            _selectionRate = settings.SelectionRate * 100;
-            _absoluteSelection = settings.AbsoluteSelection * 100;
-            _mutationChance = settings.MutationChance * 100;
+            _selectionRate = settings.SelectionRate;
+            _absoluteSelection = settings.AbsoluteSelection;
+            _mutationChance = settings.MutationChance;
             _stablePairWeight = settings.StablePairWeight;
             _groupHappinessWeight = settings.GroupHappinessWeight;
             _egalitarianHappinessWeight = settings.EgalitarianHappinessWeight;

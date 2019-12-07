@@ -37,6 +37,8 @@ namespace Szakdolgozat.ViewModel.Controls
             }
         }
 
+        public DelegateCommand DeleteAlgorithmCommand { get; private set; }
+
         public event EventHandler<AlgorithmOptionChangedEventArgs> Changed;
 
         public AlgorithmOptionBase(string name, int index)
