@@ -8,57 +8,19 @@ using Szakdolgozat.Model.Structures;
 
 namespace Szakdolgozat.Model.Algorithm
 {
-    public class GeneticAlgorithm : AlgorithmBase, IAlgorithmElement
+    public class GeneticAlgorithm : GeneticAlgorithmBase<double>, IAlgorithmElement
     {
-        /// <summary>
-        /// The population of species
-        /// </summary>
-        private List<Species> _population;
-
-        /// <summary>
-        /// A random number generator
-        /// </summary>
-        private Random _random;
-
-        /// <summary>
-        /// The settings of the genetic algorithm
-        /// </summary>
-        public GeneticSettings Settings { get; set; }
-
-        /// <summary>
-        /// Creates a new genetic algorithm to solve a stable marriage problem.
-        /// </summary>
-        /// <param name="stableMarriage">The stable marriage to be solved</param>
-        /// <param name="settings">The settings of the genetic algorithm</param>
-        public GeneticAlgorithm(StableMarriage stableMarriage, GeneticSettings settings) : base(stableMarriage)
+        public GeneticAlgorithm(StableMarriage stableMarriage, GeneticSettings settings) : base(stableMarriage, settings)
         {
-            Settings = settings;
-            _random = new Random();
-        }
-
-        /// <summary>
-        /// Solves the stable marriage problem with genetic algorithm
-        /// </summary>
-        protected override void CalculateMethod()
-        {
-            Initialization();
-
-            for (int i = 0; i < Settings.Generations; i++)
-            {
-                Selection();
-                CrossoverAndMutateAsync();
-            }
-
-            _solution = _population[0].Genes;
         }
 
         /// <summary>
         /// Initializes the population of Species
         /// </summary>
         /// <returns>async Task</returns>
-        private void Initialization()
+        protected override void Initialization()
         {
-            _population = new List<Species>();
+            _population = new List<Species<double>>();
             for (int i = 0; i < Settings.Size; i++)
             {
                 UnitSet participants1 = new UnitSet(_stableMarriage.Units1.OrderBy(x => _random.Next()));
@@ -68,7 +30,7 @@ namespace Szakdolgozat.Model.Algorithm
                 Solution genes = new Solution(participants1.Zip(participants2, (x, y) => new Tuple<int, int>(x, y)).ToList());
                 double fitness = CalculateFitness(genes);
 
-                _population.Add(new Species()
+                _population.Add(new Species<double>()
                 {
                     Genes = genes,
                     Fitness = fitness
@@ -78,12 +40,17 @@ namespace Szakdolgozat.Model.Algorithm
             _population.OrderByDescending(x => x.Fitness);
         }
 
+        protected override bool Condition()
+        {
+            return true;
+        }
+
         /// <summary>
         /// Through random selection, deletes a set amount of Species, favoring more fit species
         /// </summary>
-        private void Selection()
+        protected override void Selection()
         {
-            List<Species> newPopulation = new List<Species>(Settings.Size);
+            List<Species<double>> newPopulation = new List<Species<double>>(Settings.Size);
 
             for (int i = 0; i < Settings.AbsoluteSelection * Settings.Size; i++)
             {
@@ -103,9 +70,9 @@ namespace Szakdolgozat.Model.Algorithm
         /// <summary>
         /// Repopulates the population by crossing over surviving species and mutates them by chance
         /// </summary>
-        private async void CrossoverAndMutateAsync()
+        protected override void CrossoverAndMutate()
         {
-            List<Task<Species>> crossoverTasks = new List<Task<Species>>(); 
+            List<Task<Species<double>>> crossoverTasks = new List<Task<Species<double>>>(); 
 
             for (int i = _population.Count(); i < Settings.Size; i++) {
                 int pos1, pos2;
@@ -120,13 +87,13 @@ namespace Szakdolgozat.Model.Algorithm
 
             while (crossoverTasks.Any())
             {
-                Task<Species> finished = await Task.WhenAny(crossoverTasks);
+                Task<Species<double>> finished = Task.WhenAny(crossoverTasks).Result;
                 crossoverTasks.Remove(finished);
-                Species newSpecie = finished.Result;
+                Species<double> newSpecie = finished.Result;
 
                 if(_random.NextDouble() < Settings.MutationChance)
                 {
-                    newSpecie = await MutationAsync(newSpecie);
+                    newSpecie = MutationAsync(newSpecie).Result;
                 }
 
                 _population.Add(newSpecie);
@@ -141,9 +108,8 @@ namespace Szakdolgozat.Model.Algorithm
         /// <param name="a">The first specie</param>
         /// <param name="b">The second specie</param>
         /// <returns>The new Specie produced by crossover</returns>
-        private async Task<Species> CrossoverAsync(Species a, Species b)
+        private Task<Species<double>> CrossoverAsync(Species<double> a, Species<double> b)
         {
-            await Task.Delay(0).ConfigureAwait(false);
             Solution newGenes = new Solution();
 
             int start = a.Genes[_random.Next() % a.Genes.Count].Item1;
@@ -161,11 +127,11 @@ namespace Szakdolgozat.Model.Algorithm
             newGenes.AddRange(a.Genes.Where(x => !newGenes.Select(y => y.Item1).Contains(x.Item1)));
 
             double newFitness = CalculateFitness(newGenes);
-            return new Species()
+            return Task.FromResult(new Species<double>()
             {
                 Genes = newGenes,
                 Fitness = newFitness
-            };
+            });
         }
 
         /// <summary>
@@ -173,11 +139,12 @@ namespace Szakdolgozat.Model.Algorithm
         /// </summary>
         /// <param name="x">The specie to be mutated</param>
         /// <returns>The mutated specie</returns>
-        private async Task<Species> MutationAsync(Species x)
+        private async Task<Species<double>> MutationAsync(Species<double> x)
         {
             await Task.Delay(0).ConfigureAwait(false);
-            Solution newGenes = x.Genes;
+            Solution newGenes = new Solution(x.Genes);
 
+            /* Reverse Mutation
             int start = _random.Next() % _stableMarriage.GroupSize;
             int end = ((_random.Next() % (_stableMarriage.GroupSize - 1)) + start + 1) % _stableMarriage.GroupSize;
             if(start > end)
@@ -194,9 +161,34 @@ namespace Szakdolgozat.Model.Algorithm
                 newGenes[end] = new Tuple<int, int>(newGenes[end].Item1, temp);
                 start++;
                 end--;
+            }*/
+
+            double selection = _random.Next() % (_stableMarriage.GroupSize - 1) + 1;
+            double rate = selection / (double)_stableMarriage.GroupSize;
+            List<int> shuffle = new List<int>();
+            if(rate > 0)
+            {
+                for(int i = 0; i < newGenes.Count; i++)
+                {
+                    if(_random.NextDouble() < rate)
+                    {
+                        shuffle.Add(newGenes[i].Item2);
+                        newGenes[i] = null;
+                    }
+                }
+                for(int i = 0; i < newGenes.Count && shuffle.Count > 0; i++)
+                {
+                    if(newGenes[i] == null)
+                    {
+                        int select = _random.Next() % shuffle.Count;
+                        newGenes[i] = new Tuple<int, int>(x.Genes[i].Item1, shuffle[select]);
+                        shuffle.RemoveAt(select);
+                    }
+                }
             }
+
             double fitness = CalculateFitness(newGenes);
-            return new Species()
+            return new Species<double>()
             {
                 Genes = newGenes,
                 Fitness = fitness
@@ -208,7 +200,7 @@ namespace Szakdolgozat.Model.Algorithm
         /// </summary>
         /// <param name="solution">The solution</param>
         /// <returns>The fitness</returns>
-        private double CalculateFitness(Solution solution)
+        protected override double CalculateFitness(Solution solution)
         {
             StablePairsEvaluation stablePairsEvaluation = new StablePairsEvaluation();
             GroupHappinessEvaluation groupHappinessEvaluation = new GroupHappinessEvaluation();
@@ -237,21 +229,6 @@ namespace Szakdolgozat.Model.Algorithm
                 }
             }
             return selected;
-        }
-
-        /// <summary>
-        /// The Species is what the genetic algorithm produces and tries to solve the problem with
-        /// </summary>
-        private struct Species
-        {
-            /// <summary>
-            /// The "genes" are the result solution of the genetic algorithm
-            /// </summary>
-            public Solution Genes { get; set; }
-            /// <summary>
-            /// The fitness of the genes
-            /// </summary>
-            public double Fitness { get; set; }
         }
 
         public void Accept(IAlgorithmVisitor visitor)
