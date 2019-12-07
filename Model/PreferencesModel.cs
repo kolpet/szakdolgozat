@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Szakdolgozat.Model.Structures;
+using Szakdolgozat.Persistence;
+using Szakdolgozat.Persistence.Structures;
 
 namespace Szakdolgozat.Model
 {
@@ -14,20 +16,17 @@ namespace Szakdolgozat.Model
 
         public void Initialize()
         {
-            if(Context.ParticipantsChanged)
+            Context.PreferencesChanged = true;
+            Context.Priorities.Clear();
+            foreach(Participant participant in Context.Group1Participants)
             {
-                Context.PreferencesChanged = true;
-                Context.Priorities.Clear();
-                foreach(Participant participant in Context.Group1Participants)
-                {
-                    Context.Priorities[participant.ID] = new UnitSet(Context.Group2Participants.Select(x => x.ID).ToList());
-                }
-                foreach(Participant participant in Context.Group2Participants)
-                {
-                    Context.Priorities[participant.ID] = new UnitSet(Context.Group1Participants.Select(x => x.ID).ToList());
-                }
-                Context.ParticipantsChanged = false;
+                Context.Priorities[participant.ID] = new UnitSet(Context.Group2Participants.Select(x => x.ID).ToList());
             }
+            foreach(Participant participant in Context.Group2Participants)
+            {
+                Context.Priorities[participant.ID] = new UnitSet(Context.Group1Participants.Select(x => x.ID).ToList());
+            }
+            Context.ParticipantsChanged = false;
         }
 
         public void Validate()
@@ -55,6 +54,17 @@ namespace Szakdolgozat.Model
                 Context.Priorities[key] = new UnitSet(Context.Priorities[key].OrderBy(x => random.Next()));
             }
             Context.PreferencesChanged = true;
+        }
+        
+        public void Load()
+        {
+            Context.PreferencesChanged = true;
+            Context.Priorities.Clear();
+            foreach(PreferenceSave preference in Context.Persistence.Data.Preferences)
+            {
+                Context.Priorities[preference.Id] = new UnitSet(preference.Preferences);
+            }
+            Context.ParticipantsChanged = false;
         }
     }
 }

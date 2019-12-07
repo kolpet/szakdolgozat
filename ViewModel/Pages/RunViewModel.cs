@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Model.Structures;
+using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
 
@@ -44,18 +45,24 @@ namespace Szakdolgozat.ViewModel.Pages
             if(_model.GetContext.AlgorithmsChanged)
             {
                 _model.Initialize();
-                Results.Clear();
-                for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
-                {
-                    Results.Add(new StableMarriagePanel(_model.GetContext.Algorithms[i].Name, i)
-                    {
-                        State = "Futtatható",
-                        Time = 0,
-                        Runable = true,
-                        Done = false,
-                    });
-                }
             }
+
+            Results.Clear();
+            for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
+            {
+                Results.Add(new StableMarriagePanel(_model.GetContext.Algorithms[i].Name, i)
+                {
+                    State = "Futtatható",
+                    Time = 0,
+                    Runable = true,
+                    Done = false,
+                });
+            }
+        }
+
+        public void Load()
+        {
+            RefreshPage();
         }
 
         public void Model_AlgorithmStarted(object sender, AlgorithmEventArgs e)
@@ -90,6 +97,5 @@ namespace Szakdolgozat.ViewModel.Pages
             _model.StopAll();
             PreviousPage?.Invoke(this, null);
         }
-
     }
 }

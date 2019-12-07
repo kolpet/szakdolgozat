@@ -1,4 +1,4 @@
-﻿namespace Szakdolgozat.Model.Structures
+﻿namespace Szakdolgozat.Common
 {
     public enum MarriageGroup
     {

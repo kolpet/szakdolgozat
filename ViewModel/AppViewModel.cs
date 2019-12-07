@@ -34,7 +34,7 @@ namespace Szakdolgozat.ViewModel
 
         public AppViewModel(int defaultPage)
         {
-            _appModel = new AppModel(new XmlFilePersistence());
+            _appModel = new AppModel(new BinaryFilePersistence());
             _pages = new List<IPageTurn>();
 
             NewCommand = new DelegateCommand(param => OnNewCommand());
@@ -150,12 +150,16 @@ namespace Szakdolgozat.ViewModel
 
         private void OnSaveAs()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Title = "Fájl mentése...";
-            saveFileDialog.Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs";
-            saveFileDialog.ShowDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = "Fájl mentése...",
+                FileName = DateTime.Now.ToFileTime().ToString(),
+                Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs",
+                RestoreDirectory = true,
+                InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
+            };
 
-            if(saveFileDialog.FileName != "")
+            if(saveFileDialog.ShowDialog() == true)
             {
                 _appModel.SaveAsData(Path.GetFullPath(saveFileDialog.FileName));
             }
@@ -163,7 +167,22 @@ namespace Szakdolgozat.ViewModel
 
         private void OnLoad()
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Fájl betöltése...",
+                Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs",
+                RestoreDirectory = true,
+                InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
+            };
 
+            if(openFileDialog.ShowDialog() == true)
+            {
+                _appModel.LoadData(Path.GetFullPath(openFileDialog.FileName));
+                foreach(IPageTurn page in _pages)
+                {
+                    page.Load();
+                }
+            }
         }
     }
 }

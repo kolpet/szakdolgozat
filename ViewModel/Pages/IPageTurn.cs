@@ -1,4 +1,5 @@
 ﻿using System;
+using Szakdolgozat.Persistence;
 
 namespace Szakdolgozat.ViewModel.Pages
 {
@@ -9,5 +10,7 @@ namespace Szakdolgozat.ViewModel.Pages
         event EventHandler PreviousPage;
 
         void RefreshPage();
+
+        void Load();
     }
 }

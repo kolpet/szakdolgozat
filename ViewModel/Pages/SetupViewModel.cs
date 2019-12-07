@@ -1,5 +1,6 @@
 ﻿using System;
 using Szakdolgozat.Model;
+using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Structures;
 
 namespace Szakdolgozat.ViewModel.Pages
@@ -80,18 +81,24 @@ namespace Szakdolgozat.ViewModel.Pages
 
             ToProjectCommand = new DelegateCommand(param => OnToProjectCommand());
             ToParticipantsCommand = new DelegateCommand(param => OnToParticipantsCommand());
+
+            _model.Initialize();
         }
 
         public void RefreshPage()
         {
-            _model.Initialize();
-
             Group1Name = _model.GetContext.Group1Name;
             Group2Name = _model.GetContext.Group2Name;
             ParticipantNumber = _model.GetContext.TotalSize;
             OnPropertyChanged("Group1Name");
             OnPropertyChanged("Group2Name");
             OnPropertyChanged("ParticipantNumber");
+        }
+
+        public void Load()
+        {
+            _model.Load();
+            RefreshPage();
         }
 
         private void OnToProjectCommand()

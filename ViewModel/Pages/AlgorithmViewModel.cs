@@ -9,7 +9,6 @@ using Szakdolgozat.Model.Structures;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Events;
 using Szakdolgozat.ViewModel.Structures;
-using ViewModel.Adapters;
 
 namespace Szakdolgozat.ViewModel.Pages
 {
@@ -57,16 +56,41 @@ namespace Szakdolgozat.ViewModel.Pages
             if(_model.GetContext.PreferencesChanged)
             {
                 _model.Initialize();
-
-                AlgorithmOptions.Clear();
-                foreach(AlgorithmData data in _model.GetContext.Algorithms.ToList())
-                {
-                    AlgorithmVisitor visitor = new AlgorithmVisitor(() => OnNewGaleShapleyAlgorithmCommand(),
-                        () => OnNewGeneticAlgorithmCommand());
-                    visitor.Visit(data.Element);
-                }
-                OnPropertyChanged("AlgorithmOptions");
             }
+
+            AlgorithmOptions.Clear();
+            for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
+            {
+                AlgorithmData data = _model.GetContext.Algorithms[i];
+                AlgorithmVisitorParam visitor = new AlgorithmVisitorParam((x) => RefreshGaleShapley(data.Name, i),
+                    (x) => RefreshGenetic(data.Name, i, x.Settings));
+                visitor.Visit(data.Element);
+            }
+            OnPropertyChanged("AlgorithmOptions");
+        }
+
+        public void Load()
+        {
+            _model.Load();
+            RefreshPage();
+        }
+
+        private void RefreshGaleShapley(string name, int index)
+        {
+            AlgorithmOptionGaleShapley alg = new AlgorithmOptionGaleShapley(name, index);
+            AlgorithmOptions.Add(alg);
+            AlgorithmElements.Add(alg);
+
+            UpdateGeneticSettings(alg.Index);
+        }
+
+        private void RefreshGenetic(string name, int index, GeneticSettings settings)
+        {
+            AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(name, index, settings);
+            AlgorithmOptions.Add(alg);
+            AlgorithmElements.Add(alg);
+
+            UpdateGeneticSettings(alg.Index);
         }
 
         private void OnNewGaleShapleyAlgorithmCommand()
@@ -135,13 +159,16 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void OnDeleteAlgorithmCommand(int index)
         {
+            //TODO: Fix delete
             _model.DeleteAlgorithm(index);
             AlgorithmOptions.RemoveAt(index);
+            AlgorithmElements.RemoveAt(index);
             
             for(int i = index; i < AlgorithmOptions.Count(); i++)
             {
                 _visitor.ReduceIndex(AlgorithmElements[i]);
             }
+            OnPropertyChanged("AlgorithmOptions");
         }
 
         private void OnUpdateCommand(int index)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,28 +9,34 @@ namespace Szakdolgozat.Persistence
 {
     public abstract class PersistenceBase
     {
-        public string FilePath { get; private set; }
+        public SaveData Data { get; private set; }
+
+        public string Directory { get; private set; }
+
+        public string SavePath { get; private set; }
 
         public bool Saved { get; private set; }
 
         public PersistenceBase()
         {
             Saved = false;
+            CreateDefaultDirectory("Saves");
         }
 
         public PersistenceBase(string path)
         {
-            FilePath = path;
+            SavePath = path;
             Saved = true;
+            CreateDefaultDirectory("Saves");
         }
 
         public void Save(SaveData data, string path)
         {
             if(path != null)
             {
-                FilePath = path;
+                SavePath = path;
             }
-            if(FilePath == null)
+            if(SavePath == null)
             {
                 throw new PersistenceException();
             }
@@ -38,21 +45,25 @@ namespace Szakdolgozat.Persistence
             Saved = true;
         }
 
-        public SaveData Load(string path)
+        public void Load(string path)
         {
-            if(path != null)
-            {
-                throw new PersistenceException();
-            }
-
-            FilePath = path;
-            SaveData data = LoadFile();
+            SavePath = path ?? throw new PersistenceException();
+            Data = LoadFile();
             Saved = true;
-            return data;
         }
 
         protected abstract void SaveFile(SaveData data);
 
         protected abstract SaveData LoadFile();
+
+        private void CreateDefaultDirectory(string directoryName)
+        {
+            Directory = Path.Combine(System.IO.Directory.GetCurrentDirectory(), directoryName);
+
+            if(!System.IO.Directory.Exists(Directory))
+            {
+                System.IO.Directory.CreateDirectory(Directory);
+            }
+        }
     }
 }

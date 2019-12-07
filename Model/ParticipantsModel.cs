@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.Persistence;
+using Szakdolgozat.Persistence.Structures;
 
 namespace Szakdolgozat.Model
 {
@@ -42,18 +44,15 @@ namespace Szakdolgozat.Model
             Context.ParticipantsChanged = true;
         }
 
-        public void SaveParticipants(ref SaveData data)
+        public void Load()
         {
-
-        }
-
-        public void LoadParticipants(SaveData data)
-        {
-            var idList = Context.Participants.Select(x => x.ID);
-            if(idList.Distinct().Count() != idList.Count())
+            Context.ParticipantsChanged = true;
+            Context.Participants.Clear();
+            foreach(UnitSave unit in Context.Persistence.Data.Participants)
             {
-               
+                Context.Participants.Add(new Participant(unit.Id, unit.Name, unit.Group));
             }
+            Context.SetupChanged = false;
         }
     }
 }

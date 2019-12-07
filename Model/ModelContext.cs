@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model.Algorithm;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.Persistence;

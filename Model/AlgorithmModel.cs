@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Szakdolgozat.Common;
 using Szakdolgozat.Model.Algorithm;
 using Szakdolgozat.Model.Structures;
+using Szakdolgozat.Persistence;
+using Szakdolgozat.Persistence.Structures;
 
 namespace Szakdolgozat.Model
 {
@@ -69,13 +71,13 @@ namespace Szakdolgozat.Model
 
         public IGeneticSettings UpdateAlgorithm(int index, IGeneticSettings settings)
         {
-            if(Context.Algorithms[index].Algorithm is GeneticAlgorithm)
-            {
+            AlgorithmVisitorParam visitor = new AlgorithmVisitorParam(null, (algorithm) => 
+            { 
                 GeneticSettings newSettings = new GeneticSettings
                 {
-                    SelectionRate = settings.SelectionRate / 100,
-                    AbsoluteSelection = settings.AbsoluteSelection / 100,
-                    MutationChance = settings.MutationChance / 100,
+                    SelectionRate = settings.SelectionRate,
+                    AbsoluteSelection = settings.AbsoluteSelection,
+                    MutationChance = settings.MutationChance,
                     StablePairWeight = settings.StablePairWeight,
                     GroupHappinessWeight = settings.GroupHappinessWeight,
                     EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
@@ -83,10 +85,10 @@ namespace Szakdolgozat.Model
                     Generations = settings.Generations
                 };
 
-                ((GeneticAlgorithm)Context.Algorithms[index].Algorithm).Settings = newSettings;
+                algorithm.Settings = newSettings;
 
                 settings = newSettings;
-            }
+            });
             Context.AlgorithmsChanged = true;
             return settings;
         }
@@ -95,6 +97,23 @@ namespace Szakdolgozat.Model
         {
             Context.Algorithms.RemoveAt(index);
             Context.AlgorithmsChanged = true;
+        }
+
+        public void Load()
+        {
+            Context.PreferencesChanged = true;
+            Initialize();
+            foreach(AlgorithmSaveBase algorithm in Context.Persistence.Data.Algorithms)
+            {
+                if(algorithm is GaleShapleyAlgorithmSave)
+                {
+                    CreateGaleShapleyAlgorithm();
+                }
+                else if(algorithm is GeneticAlgorithmSave)
+                {
+                    CreateGeneticAlgorithm();
+                }
+            }
         }
     }
 }

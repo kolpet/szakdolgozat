@@ -7,12 +7,15 @@ using Szakdolgozat.Persistence;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Persistence.Structures;
+using Szakdolgozat.Common;
 
 namespace Szakdolgozat.Model
 {
     public partial class AppModel : ModelBase
     {
         public bool IsSaved { get => Context.Persistence.Saved; }
+
+        public string SaveDirectory { get => Context.Persistence.Directory; }
 
         public AppModel(PersistenceBase persistence)
         {
@@ -34,10 +37,16 @@ namespace Szakdolgozat.Model
                 {
                     Id = x.ID,
                     Name = x.Name,
-                    Group = x.Group == MarriageGroup.Group1 ? 1 : 2
+                    Group = x.Group
+                }).ToList(),
+                Preferences = Context.Priorities.Select(x => new PreferenceSave
+                {
+                    Id = x.Key,
+                    Preferences = x.Value.ToList()
                 }).ToList()
             };
 
+            data.Algorithms = new List<AlgorithmSaveBase>();
             foreach(AlgorithmData algorithm in Context.Algorithms)
             {
                 IAlgorithmVisitor visitor = new AlgorithmVisitorParam((x) => SaveGaleShapley(data, algorithm.Name),
@@ -48,9 +57,9 @@ namespace Szakdolgozat.Model
             Context.Persistence.Save(data, path);
         }
 
-        public SaveData LoadData(string path)
+        public void LoadData(string path)
         {
-            return Context.Persistence.Load(path);
+            Context.Persistence.Load(path);
         }
 
         private void SaveGaleShapley(SaveData data, string name)

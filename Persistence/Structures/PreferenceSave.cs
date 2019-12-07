@@ -1,15 +1,14 @@
 ﻿using System;
-using Szakdolgozat.Common;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Szakdolgozat.Persistence.Structures
 {
     [Serializable]
-    public class UnitSave
+    public class PreferenceSave
     {
         public int Id;
 
-        public string Name;
-
-        public MarriageGroup Group;
+        public List<int> Preferences;
     }
 }

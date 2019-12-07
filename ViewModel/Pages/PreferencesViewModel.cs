@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Szakdolgozat.Model;
+using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
 using ViewModel.Adapters;
@@ -48,8 +49,14 @@ namespace Szakdolgozat.ViewModel.Pages
             if(_model.GetContext.ParticipantsChanged)
             {
                 _model.Initialize();
-                RefreshGrid();
             }
+            RefreshGrid();
+        }
+
+        public void Load()
+        {
+            _model.Load();
+            RefreshPage();
         }
 
         private void RefreshGrid()

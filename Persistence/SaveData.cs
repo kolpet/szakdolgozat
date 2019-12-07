@@ -9,7 +9,7 @@ namespace Szakdolgozat.Persistence
     {
         public List<AlgorithmSaveBase> Algorithms;
 
-        public Dictionary<int, List<int>> Preferences;
+        public List<PreferenceSave> Preferences;
 
         public List<UnitSave> Participants;
 

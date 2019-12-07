@@ -80,7 +80,7 @@ namespace Szakdolgozat.Model.Algorithm
             int target;
             //Current pair of target
             int current;
-            while (_waiting.Count > 0) //TODO: Fix algorithm, doesn't seem to be working
+            while (_waiting.Count > 0)
             {
                 candidate = _waiting.Dequeue();
                 target = _iterators[candidate].Current;

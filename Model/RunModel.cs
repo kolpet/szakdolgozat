@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Szakdolgozat.Model.Algorithm;
 using Szakdolgozat.Model.Evaluation;
 using Szakdolgozat.Model.Events;
+using Szakdolgozat.Persistence;
 
 namespace Szakdolgozat.Model
 {
@@ -87,8 +88,9 @@ namespace Szakdolgozat.Model
 
         private async Task<int> RunAlgorithm(int Index)
         {
+            await Task.FromResult(0);
             AlgorithmBase algorithm = Context.Algorithms[Index].Algorithm;
-            await Task.Run(() => { algorithm.Calculate(); });
+            algorithm.Calculate();
 
             StablePairsEvaluation stablePairsEvaluation = new StablePairsEvaluation();
             GroupHappinessEvaluation groupHappinessEvaluation = new GroupHappinessEvaluation();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Structures;
 
 namespace Szakdolgozat.ViewModel.Pages
@@ -22,6 +23,11 @@ namespace Szakdolgozat.ViewModel.Pages
         public void RefreshPage()
         {
 
+        }
+
+        public void Load()
+        {
+            RefreshPage();
         }
 
         private void OnToSetupCommand()

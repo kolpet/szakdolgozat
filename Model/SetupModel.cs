@@ -68,14 +68,11 @@ namespace Szakdolgozat.Model
             Context.SetupChanged = true;
         }
 
-        public void Save(ref SaveData data)
+        public void Load()
         {
-
-        }
-
-        public void Load(SaveData data)
-        {
-
+            ChangeGroup1Name(Context.Persistence.Data.Group1Name);
+            ChangeGroup2Name(Context.Persistence.Data.Group2Name);
+            ChangeParticipantNumber(Context.Persistence.Data.Participants.Count);
         }
     }
 }
