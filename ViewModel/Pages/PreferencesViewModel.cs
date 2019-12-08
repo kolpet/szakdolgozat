@@ -74,8 +74,8 @@ namespace Szakdolgozat.ViewModel.Pages
                     {
                         X = j,
                         Y = i,
-                        Preferences = preferenceList[i].Preferences,
-                        Selected = j
+                        Preferences = preferenceList[i].Preferences.ToList(),
+                        SelectedIndex = j
                     });
                     PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
                 }
@@ -85,7 +85,7 @@ namespace Szakdolgozat.ViewModel.Pages
         private void PreferenceCell_SelectedChanged(object sender, EventArgs e)
         {
             PreferenceCell cell = (PreferenceCell)sender;
-            _model.EditPreference(ParticipantList[cell.Y], cell.X, cell.Selected);
+            _model.EditPreference(ParticipantList[cell.Y], cell.X, cell.Preferences[cell.SelectedIndex]);
         }
 
         private void OnRandomizeCommand()

@@ -77,6 +77,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void OnEditParticipant()
         {
+            //TODO: Does this work?
             _model.EditParticipant(SelectedParticipant.ID, SelectedParticipant.Name);
         }
 

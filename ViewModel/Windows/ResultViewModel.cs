@@ -31,7 +31,7 @@ namespace Szakdolgozat.ViewModel.Windows
                     FirstId = pair.Item1,
                     SecondId = pair.Item2,
                     WrittenPair = (firstName != "" && secondName != "") ? firstName + " - " + secondName : "",
-                    Color = new SolidColorBrush(_model.IsStablePair(pair) ? Colors.LightGreen : Colors.Orange),
+                    Color = new SolidColorBrush(_model.IsStablePair(pair) ? Colors.LightGreen : Colors.OrangeRed),
                     Statistics = "Boldogság: " + _model.GetGroupHappiness(pair) + ", Egyenlő boldogság: " + _model.GetEgalitarianGroupHappiness(pair)
 
                 };

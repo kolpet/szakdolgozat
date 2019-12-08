@@ -72,7 +72,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Preferences}" SelectedIndex="{Binding Selected}" 
+                            <ComboBox ItemsSource="{Binding Preferences}" SelectedIndex="{Binding SelectedIndex}" 
                                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                       Height="40" Width="60" Margin="0,5"/>
                         </DataTemplate>

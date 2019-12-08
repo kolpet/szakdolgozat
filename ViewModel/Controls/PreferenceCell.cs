@@ -6,7 +6,7 @@ namespace Szakdolgozat.ViewModel.Controls
 {
     public class PreferenceCell : ViewModelBase
     {
-        private int _selected;
+        private int _selectedIndex;
 
         public int X { get; set; }
 
@@ -14,16 +14,16 @@ namespace Szakdolgozat.ViewModel.Controls
 
         public List<int> Preferences { get; set; }
 
-        public int Selected
+        public int SelectedIndex
         {
-            get => _selected;
+            get => _selectedIndex;
             set
             {
-                if(_selected != value)
+                if(_selectedIndex != value)
                 {
-                    _selected = value;
+                    _selectedIndex = value;
                     SelectedChanged?.Invoke(this, null);
-                    OnPropertyChanged("Selected");
+                    OnPropertyChanged("SelectedIndex");
                 }
             }
         }
