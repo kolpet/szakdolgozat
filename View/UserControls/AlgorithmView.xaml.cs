@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Szakdolgozat.View
+namespace Szakdolgozat.View.UserControls
 {
     /// <summary>
     /// Interaction logic for AlgorithmView.xaml

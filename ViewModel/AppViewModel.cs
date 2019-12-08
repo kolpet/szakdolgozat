@@ -27,6 +27,8 @@ namespace Szakdolgozat.ViewModel
 
         public DelegateCommand LoadCommand { get; private set; }
 
+        public event EventHandler<int> NewResultWindow;
+
         public AppViewModel(): this(0)
         {
 
@@ -55,6 +57,8 @@ namespace Szakdolgozat.ViewModel
             PreferencesViewModel preferencesViewModel = new PreferencesViewModel();
             AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel();
             RunViewModel runViewModel = new RunViewModel();
+
+            runViewModel.CheckSolution += new EventHandler<int>(OnNewResultWindow);
 
             _pages.Clear();
             _pages.Add(projectViewModel);
@@ -128,6 +132,11 @@ namespace Szakdolgozat.ViewModel
                     OnPropertyChanged("CurrentPage");
                 }
             }
+        }
+
+        private void OnNewResultWindow(object sender, int e)
+        {
+            NewResultWindow?.Invoke(this, e);
         }
 
         private void OnNewCommand()

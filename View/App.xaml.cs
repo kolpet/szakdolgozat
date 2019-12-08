@@ -1,8 +1,10 @@
-﻿using System.Windows;
-using Szakdolgozat.View;
+﻿using System;
+using System.Windows;
+using Szakdolgozat.View.Windows;
 using Szakdolgozat.ViewModel;
+using Szakdolgozat.ViewModel.Windows;
 
-namespace Szakdolgozat
+namespace Szakdolgozat.View
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -15,8 +17,20 @@ namespace Szakdolgozat
 
             AppView app = new AppView();
             AppViewModel context = new AppViewModel();
+
+            context.NewResultWindow += new EventHandler<int>(OpenNewResultWindow);
+
             app.DataContext = context;
             app.Show();
+        }
+
+        private void OpenNewResultWindow(object sender, int e)
+        {
+            ResultView view = new ResultView();
+            ResultViewModel context = new ResultViewModel(e);
+
+            view.DataContext = context;
+            view.Show();
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Model.Structures;
-using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
 
@@ -18,6 +17,8 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public DelegateCommand RunSingleCommand { get; private set; }
 
+        public DelegateCommand OpenSolutionCommand { get; private set; }
+
         public DelegateCommand ToAlgorithmCommand { get; private set; }
 
         public ObservableCollection<StableMarriagePanel> Results { get; private set; }
@@ -26,12 +27,15 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
+        public event EventHandler<int> CheckSolution;
+
         public RunViewModel()
         {
             _model = new RunModel();
 
             RunAllCommand = new DelegateCommand(param => OnRunAllCommand()); 
-            RunSingleCommand = new DelegateCommand(param => OnRunSingleCommand(Convert.ToInt32(param))); 
+            RunSingleCommand = new DelegateCommand(param => OnRunSingleCommand(Convert.ToInt32(param)));
+            OpenSolutionCommand = new DelegateCommand(param => OnOpenSolutionCommand(Convert.ToInt32(param))); 
             ToAlgorithmCommand = new DelegateCommand(param => OnToAlgorithmCommand());
 
             _model.AlgorithmStarted += Model_AlgorithmStarted;
@@ -90,6 +94,11 @@ namespace Szakdolgozat.ViewModel.Pages
         private void OnRunSingleCommand(int Index)
         {
             Task.Run(() => _model.RunSingleAlgorithm(Index));
+        }
+
+        private void OnOpenSolutionCommand(int Index)
+        {
+            CheckSolution?.Invoke(this, Index);
         }
 
         private void OnToAlgorithmCommand()

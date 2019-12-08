@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Szakdolgozat.View
+namespace Szakdolgozat.View.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ResultView.xaml
     /// </summary>
-    public partial class AppView : Window
+    public partial class ResultView : Window
     {
-        public AppView()
+        public ResultView()
         {
             InitializeComponent();
         }

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using Szakdolgozat.ViewModel.Pages;
 
-namespace Szakdolgozat.View
+namespace Szakdolgozat.View.UserControls
 {
     /// <summary>
     /// Interaction logic for SetupView.xaml

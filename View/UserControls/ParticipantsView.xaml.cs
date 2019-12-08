@@ -1,9 +1,6 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
 
-namespace Szakdolgozat.View
+namespace Szakdolgozat.View.UserControls
 {
     /// <summary>
     /// Interaction logic for Populate.xaml

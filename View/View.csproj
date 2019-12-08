@@ -77,29 +77,32 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\AlgorithmOptionToStringConverter.cs" />
-    <Compile Include="View\AlgorithmView.xaml.cs">
+    <Compile Include="UserControls\AlgorithmView.xaml.cs">
       <DependentUpon>AlgorithmView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ParticipantsView.xaml.cs">
+    <Compile Include="UserControls\ParticipantsView.xaml.cs">
       <DependentUpon>ParticipantsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PreferencesView.xaml.cs">
+    <Compile Include="UserControls\PreferencesView.xaml.cs">
       <DependentUpon>PreferencesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ProjectView.xaml.cs">
+    <Compile Include="UserControls\ProjectView.xaml.cs">
       <DependentUpon>ProjectView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\RunView.xaml.cs">
+    <Compile Include="UserControls\RunView.xaml.cs">
       <DependentUpon>RunView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SetupView.xaml.cs">
+    <Compile Include="UserControls\SetupView.xaml.cs">
       <DependentUpon>SetupView.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\AlgorithmView.xaml">
+    <Compile Include="Windows\ResultView.xaml.cs">
+      <DependentUpon>ResultView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="UserControls\AlgorithmView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\AppView.xaml">
+    <Page Include="UserControls\AppView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -107,27 +110,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\AppView.xaml.cs">
+    <Compile Include="UserControls\AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ParticipantsView.xaml">
+    <Page Include="UserControls\ParticipantsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PreferencesView.xaml">
+    <Page Include="UserControls\PreferencesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ProjectView.xaml">
+    <Page Include="UserControls\ProjectView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\RunView.xaml">
+    <Page Include="UserControls\RunView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SetupView.xaml">
+    <Page Include="UserControls\SetupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ResultView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,5 +188,6 @@
       <Name>ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
