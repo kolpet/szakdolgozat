@@ -14,6 +14,8 @@ namespace Szakdolgozat.ViewModel.Windows
 
         public List<StablePairPanel> StablePairPanels { get; private set; }
 
+        public string Name { get => _model.Name; }
+
         public ResultViewModel(int result)
         {
             _model = new ResultModel(result);
@@ -35,6 +37,7 @@ namespace Szakdolgozat.ViewModel.Windows
                 };
                 StablePairPanels.Add(panel);
             }
+            OnPropertyChanged("Name");
             OnPropertyChanged("StablePairPanels");
         }
     }

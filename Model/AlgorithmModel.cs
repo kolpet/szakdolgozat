@@ -69,28 +69,37 @@ namespace Szakdolgozat.Model
             return settings;
         }
 
+        public void UpdateName(int index, string name)
+        {
+            Context.Algorithms[index].Name = name;
+        }
+
         public IGeneticSettings UpdateAlgorithm(int index, IGeneticSettings settings)
         {
-            AlgorithmVisitorParam visitor = new AlgorithmVisitorParam(null, (algorithm) => 
-            { 
-                GeneticSettings newSettings = new GeneticSettings
-                {
-                    SelectionRate = settings.SelectionRate,
-                    AbsoluteSelection = settings.AbsoluteSelection,
-                    MutationChance = settings.MutationChance,
-                    StablePairWeight = settings.StablePairWeight,
-                    GroupHappinessWeight = settings.GroupHappinessWeight,
-                    EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
-                    Size = settings.Size,
-                    Generations = settings.Generations
-                };
-
-                algorithm.Settings = newSettings;
-
-                settings = newSettings;
-            });
+            AlgorithmVisitorParam visitor = new AlgorithmVisitorParam(null,
+                (algorithm) => UpdateGeneticAlgorithm(algorithm, settings));
+            visitor.Visit(Context.Algorithms[index].Element);
             Context.AlgorithmsChanged = true;
             return settings;
+        }
+
+        public void UpdateGeneticAlgorithm(GeneticAlgorithm algorithm, IGeneticSettings settings)
+        {
+            GeneticSettings newSettings = new GeneticSettings
+            {
+                SelectionRate = settings.SelectionRate,
+                AbsoluteSelection = settings.AbsoluteSelection,
+                MutationChance = settings.MutationChance,
+                StablePairWeight = settings.StablePairWeight,
+                GroupHappinessWeight = settings.GroupHappinessWeight,
+                EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
+                Size = settings.Size,
+                Generations = settings.Generations
+            };
+
+            algorithm.Settings = newSettings;
+
+            settings = newSettings;
         }
 
         public void DeleteAlgorithm(int index)

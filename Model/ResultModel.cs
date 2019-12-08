@@ -13,6 +13,8 @@ namespace Szakdolgozat.Model
 
         public Solution Solution { get => Context.Algorithms[_index].Algorithm.Solution; }
 
+        public string Name { get => Context.Algorithms[_index].Name; }
+
         public ResultModel(int index)
         {
             _index = index;

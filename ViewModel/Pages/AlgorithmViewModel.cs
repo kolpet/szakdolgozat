@@ -88,6 +88,7 @@ namespace Szakdolgozat.ViewModel.Pages
         private void RefreshGenetic(string name, int index, GeneticSettings settings)
         {
             AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(name, index, ConvertToViewModelSettings(settings));
+            alg.Changed += new EventHandler<AlgorithmOptionChangedEventArgs>(AlgorithmOption_Changed);
             AlgorithmOptions.Add(alg);
             AlgorithmElements.Add(alg);
 
@@ -126,6 +127,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void AlgorithmOption_Changed(object sender, AlgorithmOptionChangedEventArgs e)
         {
+            _model.UpdateName(e.Index, AlgorithmOptions[e.Index].Name);
             UpdateGeneticSettings(e.Index);
         }
 
