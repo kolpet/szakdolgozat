@@ -11,8 +11,6 @@ namespace Szakdolgozat.Model
 
         protected ModelContext Context { get => _context.Value; }
 
-        public IModelContext GetContext { get => _context.Value; }
-
         public static event EventHandler<ModelErrorEventArgs> ModelError;
 
         protected void OnModelError(string message)

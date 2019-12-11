@@ -13,6 +13,8 @@ namespace Szakdolgozat.Model
 {
     public partial class AppModel : ModelBase
     {
+        public IModelContext GetContext { get => Context; }
+
         public bool IsSaved { get => Context.Persistence.Saved; }
 
         public string SaveDirectory { get => Context.Persistence.Directory; }

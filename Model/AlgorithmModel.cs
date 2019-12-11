@@ -108,6 +108,15 @@ namespace Szakdolgozat.Model
             Context.AlgorithmsChanged = true;
         }
 
+        public void VisitAlgorithm(int index, Action<GaleShapleyAlgorithm> galeShapleyMethod,
+            Action<GeneticAlgorithm> geneticMethod)
+        {
+            AlgorithmData data = Context.Algorithms[index];
+            AlgorithmVisitorParam visitor = new AlgorithmVisitorParam((x) => galeShapleyMethod?.Invoke(x),
+                (x) => geneticMethod?.Invoke(x));
+            visitor.Visit(data.Element);
+        }
+
         public void Load()
         {
             Context.PreferencesChanged = true;

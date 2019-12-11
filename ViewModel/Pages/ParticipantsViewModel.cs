@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.Persistence;
@@ -11,6 +12,8 @@ namespace Szakdolgozat.ViewModel.Pages
     public class ParticipantsViewModel : ViewModelBase, IPageTurn
     {
         private ParticipantsModel _model;
+
+        private IModelContext _context;
 
         public DelegateCommand ToSetupCommand { get; private set; }
 
@@ -30,9 +33,10 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
-        public ParticipantsViewModel()
+        public ParticipantsViewModel(IModelContext context)
         {
             _model = new ParticipantsModel();
+            _context = context;
 
             ToSetupCommand = new DelegateCommand(param => OnToSetupCommand());
             ToPreferencesCommand = new DelegateCommand(param => OnToPreferencesCommand());
@@ -42,23 +46,23 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            if(_model.GetContext.SetupChanged)
+            if(_context.SetupChanged)
             {
                 _model.Initialize();
             }
 
             Group1Participants = new ObservableCollection<ParticipantRow>();
             Group2Participants = new ObservableCollection<ParticipantRow>();
-            Group1Name = _model.GetContext.Group1Name;
-            Group2Name = _model.GetContext.Group2Name;
+            Group1Name = _context.Group1Name;
+            Group2Name = _context.Group2Name;
 
-            foreach(Participant participant in _model.GetContext.Group1Participants)
+            foreach(Participant participant in _context.Group1Participants)
             {
                 ParticipantRow row = new ParticipantRow(participant.ID, participant.Name);
                 row.NameChanged += new EventHandler(OnParticipantNameChanged);
                 Group1Participants.Add(row);
             }
-            foreach(Participant participant in _model.GetContext.Group2Participants)
+            foreach(Participant participant in _context.Group2Participants)
             {
                 ParticipantRow row = new ParticipantRow(participant.ID, participant.Name);
                 row.NameChanged += new EventHandler(OnParticipantNameChanged);

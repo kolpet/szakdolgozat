@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using Szakdolgozat.Model.Algorithm;
-using Szakdolgozat.Model.Structures;
-using Szakdolgozat.Persistence;
 
-namespace Szakdolgozat.Model
+namespace Szakdolgozat.Common
 {
     public interface IModelContext
     {
@@ -15,15 +12,15 @@ namespace Szakdolgozat.Model
 
         bool AlgorithmsChanged { get; }
 
-        List<AlgorithmData> Algorithms { get; }
+        IList<IAlgorithmData> GetAlgorithms { get; }
 
-        Priorities Priorities { get;}
+        IPriorities GetPriorities { get; }
 
-        List<Participant> Participants { get;}
+        IList<IParticipant> GetParticipants { get; }
 
-        IEnumerable<Participant> Group1Participants { get; }
+        IEnumerable<IParticipant> Group1Participants { get; }
 
-        IEnumerable<Participant> Group2Participants { get; }
+        IEnumerable<IParticipant> Group2Participants { get; }
 
         string Group1Name { get; }
 

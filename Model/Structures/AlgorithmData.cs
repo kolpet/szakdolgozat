@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Szakdolgozat.Common;
 using Szakdolgozat.Model.Algorithm;
 
 namespace Szakdolgozat.Model.Structures
 {
-    public class AlgorithmData
+    public class AlgorithmData : IAlgorithmData
     {
         public string Name { get; set; }
 

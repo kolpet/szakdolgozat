@@ -1,4 +1,6 @@
 ﻿using System;
+using Szakdolgozat.Common;
+using Szakdolgozat.Model;
 using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Structures;
 
@@ -15,7 +17,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler DefaultPage;
 
-        public ProjectViewModel()
+        public ProjectViewModel(IModelContext context)
         {
             ToSetupCommand = new DelegateCommand(param => OnToSetupCommand());
         }

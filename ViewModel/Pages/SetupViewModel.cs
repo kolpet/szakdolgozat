@@ -1,4 +1,5 @@
 ﻿using System;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
 using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Structures;
@@ -7,13 +8,15 @@ namespace Szakdolgozat.ViewModel.Pages
 {
     public class SetupViewModel : ViewModelBase, IPageTurn
     {
+        private SetupModel _model;
+
+        private IModelContext _context;
+        
         private int _participantNumber;
 
         private string _group1Name;
 
         private string _group2Name;
-
-        private SetupModel _model;
 
         public DelegateCommand ToProjectCommand { get; private set; }
 
@@ -35,7 +38,7 @@ namespace Szakdolgozat.ViewModel.Pages
                         _model.ChangeParticipantNumber(value);
                     }
                     catch { }
-                    _participantNumber = _model.GetContext.TotalSize;
+                    _participantNumber = _context.TotalSize;
                     OnPropertyChanged("ParticipantNumber");
                 }
             }
@@ -52,7 +55,7 @@ namespace Szakdolgozat.ViewModel.Pages
                         _model.ChangeGroup1Name(value);
                     }
                     catch { }
-                    _group1Name = _model.GetContext.Group1Name;
+                    _group1Name = _context.Group1Name;
                     OnPropertyChanged("Group1Name");
                 }
             }
@@ -69,15 +72,16 @@ namespace Szakdolgozat.ViewModel.Pages
                         _model.ChangeGroup2Name(value);
                     }
                     catch { }
-                    _group2Name = _model.GetContext.Group2Name;
+                    _group2Name = _context.Group2Name;
                     OnPropertyChanged("Group2Name");
                 }
             }
         }
 
-        public SetupViewModel()
+        public SetupViewModel(IModelContext context)
         {
             _model = new SetupModel();
+            _context = context;
 
             ToProjectCommand = new DelegateCommand(param => OnToProjectCommand());
             ToParticipantsCommand = new DelegateCommand(param => OnToParticipantsCommand());
@@ -87,9 +91,9 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            Group1Name = _model.GetContext.Group1Name;
-            Group2Name = _model.GetContext.Group2Name;
-            ParticipantNumber = _model.GetContext.TotalSize;
+            Group1Name = _context.Group1Name;
+            Group2Name = _context.Group2Name;
+            ParticipantNumber = _context.TotalSize;
             OnPropertyChanged("Group1Name");
             OnPropertyChanged("Group2Name");
             OnPropertyChanged("ParticipantNumber");

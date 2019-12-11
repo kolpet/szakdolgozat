@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Model.Structures;
@@ -12,6 +13,8 @@ namespace Szakdolgozat.ViewModel.Pages
     public class RunViewModel : ViewModelBase, IPageTurn
     {
         private RunModel _model;
+
+        private IModelContext _context;
 
         public DelegateCommand RunAllCommand { get; private set; }
 
@@ -29,9 +32,10 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler<int> CheckSolution;
 
-        public RunViewModel()
+        public RunViewModel(IModelContext context)
         {
             _model = new RunModel();
+            _context = context;
 
             RunAllCommand = new DelegateCommand(param => OnRunAllCommand()); 
             RunSingleCommand = new DelegateCommand(param => OnRunSingleCommand(Convert.ToInt32(param)));
@@ -46,15 +50,15 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            if(_model.GetContext.AlgorithmsChanged)
+            if(_context.AlgorithmsChanged)
             {
                 _model.Initialize();
             }
 
             Results.Clear();
-            for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
+            for(int i = 0; i < _context.GetAlgorithms.Count; i++)
             {
-                Results.Add(new StableMarriagePanel(_model.GetContext.Algorithms[i].Name, i)
+                Results.Add(new StableMarriagePanel(_context.GetAlgorithms[i].Name, i)
                 {
                     State = "Futtatható",
                     Time = 0,

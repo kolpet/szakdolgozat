@@ -8,6 +8,8 @@ using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Pages;
 using Szakdolgozat.ViewModel.Structures;
 using System.IO;
+using Szakdolgozat.ViewModel.Events;
+using Szakdolgozat.Common;
 
 namespace Szakdolgozat.ViewModel
 {
@@ -19,6 +21,8 @@ namespace Szakdolgozat.ViewModel
 
         private AppModel _appModel;
 
+        private IModelContext _context;
+
         public DelegateCommand NewCommand { get; private set; }
 
         public DelegateCommand SaveCommand { get; private set; }
@@ -27,7 +31,7 @@ namespace Szakdolgozat.ViewModel
 
         public DelegateCommand LoadCommand { get; private set; }
 
-        public event EventHandler<int> NewResultWindow;
+        public event EventHandler<NewResultWindowEventArgs> NewResultWindow;
 
         public AppViewModel(): this(0)
         {
@@ -38,6 +42,7 @@ namespace Szakdolgozat.ViewModel
         {
             _appModel = new AppModel(new BinaryFilePersistence());
             _pages = new List<IPageTurn>();
+            _context = _appModel.GetContext;
 
             NewCommand = new DelegateCommand(param => OnNewCommand());
             SaveCommand = new DelegateCommand(param => OnSave());
@@ -51,12 +56,12 @@ namespace Szakdolgozat.ViewModel
 
         public void NewProject(int defaultPage)
         { 
-            ProjectViewModel projectViewModel = new ProjectViewModel();
-            SetupViewModel setupViewModel = new SetupViewModel();
-            ParticipantsViewModel participantsViewModel = new ParticipantsViewModel();
-            PreferencesViewModel preferencesViewModel = new PreferencesViewModel();
-            AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel();
-            RunViewModel runViewModel = new RunViewModel();
+            ProjectViewModel projectViewModel = new ProjectViewModel(_context);
+            SetupViewModel setupViewModel = new SetupViewModel(_context);
+            ParticipantsViewModel participantsViewModel = new ParticipantsViewModel(_context);
+            PreferencesViewModel preferencesViewModel = new PreferencesViewModel(_context);
+            AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel(_context);
+            RunViewModel runViewModel = new RunViewModel(_context);
 
             runViewModel.CheckSolution += new EventHandler<int>(OnNewResultWindow);
 
@@ -136,7 +141,7 @@ namespace Szakdolgozat.ViewModel
 
         private void OnNewResultWindow(object sender, int e)
         {
-            NewResultWindow?.Invoke(this, e);
+            NewResultWindow?.Invoke(this, new NewResultWindowEventArgs(_context, e));
         }
 
         private void OnNewCommand()

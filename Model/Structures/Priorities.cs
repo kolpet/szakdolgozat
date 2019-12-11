@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Szakdolgozat.Common;
 
 namespace Szakdolgozat.Model.Structures
 {
     /// <summary>
     /// Contains a set of priorities for a set of participants. Equivalent to Dictionary<int, ParticipantSet>
     /// </summary>
-    public class Priorities : Dictionary<int, UnitSet>
+    public class Priorities : Dictionary<int, UnitSet>, IPriorities
     {
         /// <summary>
         /// Create a new set of priorities
@@ -18,6 +19,11 @@ namespace Szakdolgozat.Model.Structures
         /// <param name="dictionary">The dictionary of priorities</param>
         public Priorities(IDictionary<int, UnitSet> dictionary) : base(dictionary)
         {
+        }
+
+        public Dictionary<int, List<int>> GetDictionary()
+        {
+            return this.ToDictionary(x => x.Key, x => x.Value.GetList());
         }
 
         /// <summary>

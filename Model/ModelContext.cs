@@ -10,8 +10,6 @@ namespace Szakdolgozat.Model
     //Singleton
     public sealed class ModelContext : IModelContext
     {
-        private bool _setupChanged;
-
         private bool _participantsChanged;
 
         private bool _preferencesChanged;
@@ -23,8 +21,14 @@ namespace Szakdolgozat.Model
 
         public StableMarriage StableMarriage { get; set; }
 
+        public List<AlgorithmData> Algorithms { get; set; }
+
+        public Priorities Priorities { get; set; }
+
+        public List<Participant> Participants { get; set; }
+
         //Visible from interface
-        public bool SetupChanged { get => _setupChanged; set => _setupChanged = value; }
+        public bool SetupChanged { get; set; }
 
         public bool ParticipantsChanged { get => _participantsChanged || SetupChanged; set => _participantsChanged = value; }
 
@@ -32,15 +36,15 @@ namespace Szakdolgozat.Model
 
         public bool AlgorithmsChanged { get => _algorithmsChanged || PreferencesChanged; set => _algorithmsChanged = value; }
 
-        public List<AlgorithmData> Algorithms { get; set; }
+        public IList<IAlgorithmData> GetAlgorithms { get => Algorithms.Select<AlgorithmData, IAlgorithmData>(x => x).ToList(); }
 
-        public Priorities Priorities { get; set; }
+        public IPriorities GetPriorities { get => Priorities; }
 
-        public List<Participant> Participants { get; set; }
+        public IList<IParticipant> GetParticipants { get => Participants.Select<Participant, IParticipant>(x => x).ToList(); }
 
-        public IEnumerable<Participant> Group1Participants { get => Participants.Where(x => x.Group == MarriageGroup.Group1); }
+        public IEnumerable<IParticipant> Group1Participants { get => GetParticipants.Where(x => x.Group == MarriageGroup.Group1); }
 
-        public IEnumerable<Participant> Group2Participants { get => Participants.Where(x => x.Group == MarriageGroup.Group2); }
+        public IEnumerable<IParticipant> Group2Participants { get => GetParticipants.Where(x => x.Group == MarriageGroup.Group2); }
 
         public string Group1Name { get; set; }
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
-using Szakdolgozat.Persistence;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
 using ViewModel.Adapters;
@@ -13,6 +13,8 @@ namespace Szakdolgozat.ViewModel.Pages
     public class PreferencesViewModel : ViewModelBase, IPageTurn
     {
         private PreferencesModel _model;
+        
+        private IModelContext _context;
 
         public DelegateCommand RandomizeCommand { get; private set; }
 
@@ -24,17 +26,18 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public List<string> ParticipantList { get; set; }
 
-        public int PreferenceGridRows { get => _model.GetContext.TotalSize; }
+        public int PreferenceGridRows { get => _context.TotalSize; }
 
-        public int PreferenceGridColumns { get => _model.GetContext.GroupSize; }
+        public int PreferenceGridColumns { get => _context.GroupSize; }
 
         public event EventHandler NextPage;
 
         public event EventHandler PreviousPage;
 
-        public PreferencesViewModel()
+        public PreferencesViewModel(IModelContext context)
         {
             _model = new PreferencesModel();
+            _context = context;
 
             RandomizeCommand = new DelegateCommand(param => OnRandomizeCommand());
             ToParticipantsCommand = new DelegateCommand(param => OnToParticipantsCommand());
@@ -46,7 +49,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            if(_model.GetContext.ParticipantsChanged)
+            if(_context.ParticipantsChanged)
             {
                 _model.Initialize();
             }
@@ -63,7 +66,7 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             PreferenceGrid.Clear();
             ParticipantList.Clear();
-            List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
+            List<Preference> preferenceList = new PrioritiesAdapter(_context.GetPriorities);
             for(int i = 0; i < PreferenceGridRows; i++)
             {
                 ParticipantList.Add(GetName(preferenceList[i].ID));
@@ -93,9 +96,9 @@ namespace Szakdolgozat.ViewModel.Pages
         private string GetName(int id)
         {
             string name = id.ToString();
-            if(_model.GetContext.Participants[id].Name != "")
+            if(_context.GetParticipants[id].Name != "")
             {
-                name += " (" + _model.GetContext.Participants[id].Name + ")";
+                name += " (" + _context.GetParticipants[id].Name + ")";
             }
             return name;
         }

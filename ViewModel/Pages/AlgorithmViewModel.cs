@@ -16,6 +16,8 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private AlgorithmModel _model;
 
+        private IModelContext _context;
+
         private IAlgorithmOptionVisitor _visitor;
 
         private List<IAlgorithmOptionElement> AlgorithmElements;
@@ -36,9 +38,10 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
-        public AlgorithmViewModel()
+        public AlgorithmViewModel(IModelContext context)
         {
             _model = new AlgorithmModel();
+            _context = context;
 
             DeleteAlgorithmCommand = new DelegateCommand(param => OnDeleteAlgorithmCommand(Convert.ToInt32(param)));
             NewGaleShapleyAlgorithmCommand = new DelegateCommand(param => OnNewGaleShapleyAlgorithmCommand());
@@ -53,19 +56,19 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public void RefreshPage()
         {
-            if(_model.GetContext.PreferencesChanged)
+            if(_context.PreferencesChanged)
             {
                 _model.Initialize();
             }
 
             AlgorithmOptions.Clear();
             AlgorithmElements.Clear();
-            for(int i = 0; i < _model.GetContext.Algorithms.Count; i++)
+            for(int i = 0; i < _context.GetAlgorithms.Count; i++)
             {
-                AlgorithmData data = _model.GetContext.Algorithms[i];
-                AlgorithmVisitorParam visitor = new AlgorithmVisitorParam((x) => RefreshGaleShapley(data.Name, i),
+                IAlgorithmData data = _context.GetAlgorithms[i];
+                _model.VisitAlgorithm(i, 
+                    (x) => RefreshGaleShapley(data.Name, i),
                     (x) => RefreshGenetic(data.Name, i, x.Settings));
-                visitor.Visit(data.Element);
             }
             OnPropertyChanged("AlgorithmOptions");
         }
@@ -99,7 +102,7 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             _model.CreateGaleShapleyAlgorithm();
             AlgorithmOptionGaleShapley alg = new AlgorithmOptionGaleShapley(
-                _model.GetContext.Algorithms.Last().Name,
+                _context.GetAlgorithms.Last().Name,
                 AlgorithmOptions.Count()
             );
             AlgorithmOptions.Add(alg);
@@ -113,7 +116,7 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             IGeneticSettings settings = _model.CreateGeneticAlgorithm();
             AlgorithmOptionGenetic alg = new AlgorithmOptionGenetic(
-                _model.GetContext.Algorithms.Last().Name,
+                _context.GetAlgorithms.Last().Name,
                 AlgorithmOptions.Count(),
                 ConvertToViewModelSettings(settings)
             );

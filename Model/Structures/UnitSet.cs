@@ -12,5 +12,7 @@ namespace Szakdolgozat.Model.Structures
         /// </summary>
         /// <param name="collection">List of participants</param>
         public UnitSet(IEnumerable<int> collection) : base(collection) { }
+
+        public List<int> GetList() { return this; }
     }
 }
