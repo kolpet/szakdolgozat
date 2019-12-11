@@ -64,7 +64,7 @@
                                             <StackPanel Orientation="Horizontal"
                                                         HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
                                                         Margin="10">
-                                                <TextBlock Text="Gale-Shapley Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
+                                                <TextBlock Text="Gale-Shapley Algoritmus" FontSize="16" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
                                                 <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
                                                 <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="20"
                                                          VerticalAlignment="Bottom"/>
@@ -95,7 +95,7 @@
                                                             Orientation="Horizontal" 
                                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" 
                                                             Margin="10">
-                                                    <TextBlock Text="Genetikus Algoritmus" FontSize="16" VerticalAlignment="Bottom"/>
+                                                    <TextBlock Text="Genetikus Algoritmus" FontSize="16" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
                                                     <TextBlock Text="futási név:" VerticalAlignment="Bottom"/>
                                                     <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150" Height="20"
                                                              VerticalAlignment="Bottom"/>

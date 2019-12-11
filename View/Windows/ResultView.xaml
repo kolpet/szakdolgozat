@@ -19,10 +19,10 @@
                                 Background="{Binding Color}">
                             <StackPanel Orientation="Horizontal">
                                 <Border Margin="5,5" Padding="5,5" BorderBrush="Black" BorderThickness="1">
-                                    <TextBlock Text="{Binding FirstId}" Width="50" Height="50"/>
+                                    <TextBlock Text="{Binding FirstId}" MinWidth="20" MinHeight="20"/>
                                 </Border>
                                 <Border Margin="5,5" Padding="5,5" BorderBrush="Black" BorderThickness="1">
-                                    <TextBlock Text="{Binding SecondId}" Width="50" Height="50"/>
+                                    <TextBlock Text="{Binding SecondId}" MinWidth="20" MinHeight="20"/>
                                 </Border>
                                 <StackPanel Orientation="Vertical">
                                     <TextBlock Text="{Binding WrittenPair}" />

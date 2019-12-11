@@ -42,27 +42,22 @@
                       VerticalScrollBarVisibility="Auto" 
                       Grid.Row="1"
                       Height="auto">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-
-                <ItemsControl Grid.Column="0" ItemsSource="{Binding ParticipantList}">
+            <StackPanel Orientation="Horizontal">
+                <ItemsControl ItemsSource="{Binding ParticipantList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Height="40" Margin="0,5" Padding="2,0"
                                     BorderBrush="Black" BorderThickness="1">
                                 <TextBlock
                                     VerticalAlignment="Center"
+                                    MinWidth="20"
                                     TextAlignment="Center"
                                     Text="{Binding}"/>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-
-                <ItemsControl Grid.Column="1" ItemsSource="{Binding PreferenceGrid}">
+                <ItemsControl ItemsSource="{Binding PreferenceGrid}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <UniformGrid Rows="{Binding PreferenceGridRows}" Columns="{Binding PreferenceGridColumns}" 
@@ -83,7 +78,7 @@
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
-            </Grid>
+            </StackPanel>
         </ScrollViewer>
 
         <Grid Grid.Row="2">

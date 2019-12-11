@@ -55,12 +55,12 @@
                                                             HorizontalAlignment="Stretch" VerticalAlignment="Center" 
                                                             Margin="10">
                                         <TextBlock Text="{Binding Name}" FontSize="16" 
-                                                   VerticalAlignment="Bottom"/>
-                                        <TextBlock Text="állapot:" VerticalAlignment="Bottom"/>
-                                        <TextBlock Text="{Binding State}" VerticalAlignment="Bottom"/>
+                                                   VerticalAlignment="Bottom" Margin="0,0,10,0"/>
+                                        <TextBlock Text="állapot:" VerticalAlignment="Bottom" Margin="0,0,5,0"/>
+                                        <TextBlock Text="{Binding State}" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
                                         <Button x:Name="runSingleCommand"
                                                         HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                        Width="75"
+                                                        Width="75" Margin="0,0,10,0"
                                                         Content="Indítás" 
                                                         Visibility="{Binding Runable, Converter={StaticResource BoolToVisibility}, UpdateSourceTrigger=PropertyChanged}"
                                                         Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl},
