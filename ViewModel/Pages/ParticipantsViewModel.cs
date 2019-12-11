@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.Persistence;
+using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
 
 namespace Szakdolgozat.ViewModel.Pages
@@ -11,15 +12,13 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private ParticipantsModel _model;
 
-        public DelegateCommand EditParticipantCommand { get; private set; }
-
         public DelegateCommand ToSetupCommand { get; private set; }
 
         public DelegateCommand ToPreferencesCommand { get; private set; }
 
-        public ObservableCollection<Participant> Group1Participants { get; set; }
+        public ObservableCollection<ParticipantRow> Group1Participants { get; set; }
 
-        public ObservableCollection<Participant> Group2Participants { get; set; }
+        public ObservableCollection<ParticipantRow> Group2Participants { get; set; }
 
         public Participant SelectedParticipant { get; set; }
 
@@ -35,7 +34,6 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             _model = new ParticipantsModel();
 
-            EditParticipantCommand = new DelegateCommand(param => OnEditParticipant());
             ToSetupCommand = new DelegateCommand(param => OnToSetupCommand());
             ToPreferencesCommand = new DelegateCommand(param => OnToPreferencesCommand());
 
@@ -49,18 +47,22 @@ namespace Szakdolgozat.ViewModel.Pages
                 _model.Initialize();
             }
 
-            Group1Participants = new ObservableCollection<Participant>();
-            Group2Participants = new ObservableCollection<Participant>();
+            Group1Participants = new ObservableCollection<ParticipantRow>();
+            Group2Participants = new ObservableCollection<ParticipantRow>();
             Group1Name = _model.GetContext.Group1Name;
             Group2Name = _model.GetContext.Group2Name;
 
             foreach(Participant participant in _model.GetContext.Group1Participants)
             {
-                Group1Participants.Add(participant);
+                ParticipantRow row = new ParticipantRow(participant.ID, participant.Name);
+                row.NameChanged += new EventHandler(OnParticipantNameChanged);
+                Group1Participants.Add(row);
             }
             foreach(Participant participant in _model.GetContext.Group2Participants)
             {
-                Group2Participants.Add(participant);
+                ParticipantRow row = new ParticipantRow(participant.ID, participant.Name);
+                row.NameChanged += new EventHandler(OnParticipantNameChanged);
+                Group2Participants.Add(row);
             }
 
             OnPropertyChanged("Group1Name");
@@ -69,16 +71,16 @@ namespace Szakdolgozat.ViewModel.Pages
             OnPropertyChanged("Group2Participants");
         }
 
+        private void OnParticipantNameChanged(object sender, EventArgs e)
+        {
+            ParticipantRow row = (ParticipantRow)sender;
+            _model.EditParticipant(row.ID, row.Name);
+        }
+
         public void Load()
         {
             _model.Load();
             RefreshPage();
-        }
-
-        private void OnEditParticipant()
-        {
-            //TODO: Does this work?
-            _model.EditParticipant(SelectedParticipant.ID, SelectedParticipant.Name);
         }
 
         private void OnToSetupCommand()

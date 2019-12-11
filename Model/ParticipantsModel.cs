@@ -21,10 +21,14 @@ namespace Szakdolgozat.Model
             {
                 Context.ParticipantsChanged = true;
                 Context.Participants.Clear();
-                for(int i = 0; i < Context.GroupSize; i++)
+                int i = 0;
+                for(; i < Context.GroupSize; i++)
                 {
                     Context.Participants.Add(new Participant(i, "", MarriageGroup.Group1));
-                    Context.Participants.Add(new Participant(i + Context.GroupSize, "", MarriageGroup.Group2));
+                }
+                for(; i < Context.TotalSize; i++)
+                {
+                    Context.Participants.Add(new Participant(i, "", MarriageGroup.Group2));
                 }
                 Context.SetupChanged = false;
             }

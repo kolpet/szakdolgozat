@@ -12,7 +12,9 @@ namespace Szakdolgozat.ViewModel.Controls
 
         public int Y { get; set; }
 
-        public List<int> Preferences { get; set; }
+        public List<string> Preferences { get; set; }
+
+        public List<int> PreferenceValues { get; set; }
 
         public int SelectedIndex
         {
@@ -27,6 +29,8 @@ namespace Szakdolgozat.ViewModel.Controls
                 }
             }
         }
+
+        public int Id { get; internal set; }
 
         public event EventHandler SelectedChanged;
     }

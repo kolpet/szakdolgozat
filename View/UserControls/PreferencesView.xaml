@@ -51,12 +51,11 @@
                 <ItemsControl Grid.Column="0" ItemsSource="{Binding ParticipantList}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Height="40" Margin="0,5"
+                            <Border Height="40" Margin="0,5" Padding="2,0"
                                     BorderBrush="Black" BorderThickness="1">
                                 <TextBlock
                                     VerticalAlignment="Center"
                                     TextAlignment="Center"
-                                    Width="40" 
                                     Text="{Binding}"/>
                             </Border>
                         </DataTemplate>

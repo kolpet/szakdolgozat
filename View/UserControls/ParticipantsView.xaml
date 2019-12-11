@@ -54,8 +54,7 @@
             <DataGrid x:Name="group1Grid" Grid.Column="0" 
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                      ItemsSource="{Binding Group1Participants}" AutoGenerateColumns="False"
-                      SelectedItem="{Binding Path=SelectedParticipant, Mode=TwoWay}">
+                      ItemsSource="{Binding Group1Participants}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="50" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Név" Binding="{Binding Name}" Width="*"/>
@@ -66,8 +65,7 @@
             <DataGrid x:Name="group2Grid" Grid.Column="1" 
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                       HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                      ItemsSource="{Binding Group2Participants}" AutoGenerateColumns="False"
-                      SelectedItem="{Binding Path=SelectedParticipant, Mode=TwoWay}">
+                      ItemsSource="{Binding Group2Participants}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="50" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Név" Binding="{Binding Name}" Width="*"/>

@@ -22,7 +22,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public ObservableCollection<PreferenceCell> PreferenceGrid { get; set; }
 
-        public List<int> ParticipantList { get; set; }
+        public List<string> ParticipantList { get; set; }
 
         public int PreferenceGridRows { get => _model.GetContext.TotalSize; }
 
@@ -41,7 +41,7 @@ namespace Szakdolgozat.ViewModel.Pages
             ToAlgorithmCommand = new DelegateCommand(param => OnToAlgorithmCommand());
 
             PreferenceGrid = new ObservableCollection<PreferenceCell>();
-            ParticipantList = new List<int>();
+            ParticipantList = new List<string>();
         }
 
         public void RefreshPage()
@@ -66,15 +66,17 @@ namespace Szakdolgozat.ViewModel.Pages
             List<Preference> preferenceList = new PrioritiesAdapter(_model.GetContext.Priorities);
             for(int i = 0; i < PreferenceGridRows; i++)
             {
-                ParticipantList.Add(preferenceList[i].ID);
+                ParticipantList.Add(GetName(preferenceList[i].ID));
 
                 for(int j = 0; j < PreferenceGridColumns; j++)
                 {
                     PreferenceGrid.Add(new PreferenceCell()
                     {
+                        Id = preferenceList[i].ID,
                         X = j,
                         Y = i,
-                        Preferences = preferenceList[i].Preferences.ToList(),
+                        Preferences = preferenceList[i].Preferences.Select(x => GetName(x)).ToList(),
+                        PreferenceValues = preferenceList[i].Preferences.ToList(),
                         SelectedIndex = j
                     });
                     PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
@@ -85,7 +87,17 @@ namespace Szakdolgozat.ViewModel.Pages
         private void PreferenceCell_SelectedChanged(object sender, EventArgs e)
         {
             PreferenceCell cell = (PreferenceCell)sender;
-            _model.EditPreference(ParticipantList[cell.Y], cell.X, cell.Preferences[cell.SelectedIndex]);
+            _model.EditPreference(cell.Id, cell.X, cell.PreferenceValues[cell.SelectedIndex]);
+        }
+
+        private string GetName(int id)
+        {
+            string name = id.ToString();
+            if(_model.GetContext.Participants[id].Name != "")
+            {
+                name += " (" + _model.GetContext.Participants[id].Name + ")";
+            }
+            return name;
         }
 
         private void OnRandomizeCommand()
