@@ -15,11 +15,6 @@ namespace Unit_Test
         {
         }
 
-        public ModelContext GetContext()
-        {
-
-        }
-
         [TestMethod]
         public void Model_SetupModel()
         {

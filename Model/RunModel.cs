@@ -64,6 +64,9 @@ namespace Szakdolgozat.Model
 
         public async Task RunSingleAlgorithm(int Index)
         {
+            if(Context.Algorithms.Count() <= Index || Index < 0)
+                return;
+
             if(!_running.Contains(Index))
             {
                 _running.Add(Index);
@@ -78,6 +81,7 @@ namespace Szakdolgozat.Model
 
         public void StopAll()
         {
+            //TODO: Create cancellation token system
             _running.Clear();
             foreach(Task task in _tasks)
             {

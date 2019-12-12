@@ -24,12 +24,12 @@ namespace Szakdolgozat.Model.Algorithm
 
         public void Visit(GaleShapleyAlgorithm element)
         {
-            _galeShapleyMethod.Invoke();
+            _galeShapleyMethod?.Invoke();
         }
 
         public void Visit(GeneticAlgorithm element)
         {
-            _geneticMethod.Invoke();
+            _geneticMethod?.Invoke();
         }
     }
 }

@@ -6,7 +6,7 @@ using Szakdolgozat.Common;
 namespace Szakdolgozat.Persistence.Structures
 {
     [Serializable]
-    public class GeneticAlgorithmSave : AlgorithmSaveBase, IGeneticSettings
+    public class GeneticAlgorithmSave : AlgorithmSaveBase, IGeneticSettings, IAlgorithmSaveElement
     {
         public double AbsoluteSelection { get; set; }
 
@@ -23,5 +23,10 @@ namespace Szakdolgozat.Persistence.Structures
         public int Size { get; set; }
 
         public int Generations { get; set; }
+
+        public override void Accept(IAlgorithmSaveVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

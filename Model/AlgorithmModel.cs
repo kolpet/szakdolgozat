@@ -54,8 +54,8 @@ namespace Szakdolgozat.Model
                 StablePairWeight = 1,
                 GroupHappinessWeight = 0,
                 EgalitarianHappinessWeight = 0,
-                Size = 1000,
-                Generations = 1000
+                Size = 200,
+                Generations = 200
             };
             GeneticAlgorithm algorithm = new GeneticAlgorithm(Context.StableMarriage, settings);
 
@@ -72,6 +72,7 @@ namespace Szakdolgozat.Model
         public void UpdateName(int index, string name)
         {
             Context.Algorithms[index].Name = name;
+            Context.AlgorithmsChanged = true;
         }
 
         public IGeneticSettings UpdateAlgorithm(int index, IGeneticSettings settings)
@@ -79,33 +80,16 @@ namespace Szakdolgozat.Model
             AlgorithmVisitorParam visitor = new AlgorithmVisitorParam(null,
                 (algorithm) => UpdateGeneticAlgorithm(algorithm, settings));
             visitor.Visit(Context.Algorithms[index].Element);
-            Context.AlgorithmsChanged = true;
             return settings;
-        }
-
-        public void UpdateGeneticAlgorithm(GeneticAlgorithm algorithm, IGeneticSettings settings)
-        {
-            GeneticSettings newSettings = new GeneticSettings
-            {
-                SelectionRate = settings.SelectionRate,
-                AbsoluteSelection = settings.AbsoluteSelection,
-                MutationChance = settings.MutationChance,
-                StablePairWeight = settings.StablePairWeight,
-                GroupHappinessWeight = settings.GroupHappinessWeight,
-                EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
-                Size = settings.Size,
-                Generations = settings.Generations
-            };
-
-            algorithm.Settings = newSettings;
-
-            settings = newSettings;
         }
 
         public void DeleteAlgorithm(int index)
         {
-            Context.Algorithms.RemoveAt(index);
-            Context.AlgorithmsChanged = true;
+            if(Context.Algorithms.Count() > index && index >= 0)
+            {
+                Context.Algorithms.RemoveAt(index);
+                Context.AlgorithmsChanged = true;
+            }
         }
 
         public void VisitAlgorithm(int index, Action<GaleShapleyAlgorithm> galeShapleyMethod,
@@ -123,15 +107,40 @@ namespace Szakdolgozat.Model
             Initialize();
             foreach(AlgorithmSaveBase algorithm in Context.Persistence.Data.Algorithms)
             {
-                if(algorithm is GaleShapleyAlgorithmSave)
+                AlgorithmSaveVisitorParam saveVisitor = new AlgorithmSaveVisitorParam((x) =>
                 {
                     CreateGaleShapleyAlgorithm();
-                }
-                else if(algorithm is GeneticAlgorithmSave)
+                }, 
+                (x) =>
                 {
                     CreateGeneticAlgorithm();
-                }
+                    AlgorithmVisitorParam visitor = new AlgorithmVisitorParam(null,
+                        (y) => UpdateGeneticAlgorithm(y, x));
+                    visitor.Visit(Context.Algorithms.Last().Element);
+                });
+                saveVisitor.Visit(algorithm);
+                Context.Algorithms.Last().Name = algorithm.AlgorithmName;
             }
+        }
+
+        private void UpdateGeneticAlgorithm(GeneticAlgorithm algorithm, IGeneticSettings settings)
+        {
+            GeneticSettings newSettings = new GeneticSettings
+            {
+                SelectionRate = settings.SelectionRate,
+                AbsoluteSelection = settings.AbsoluteSelection,
+                MutationChance = settings.MutationChance,
+                StablePairWeight = settings.StablePairWeight,
+                GroupHappinessWeight = settings.GroupHappinessWeight,
+                EgalitarianHappinessWeight = settings.EgalitarianHappinessWeight,
+                Size = settings.Size,
+                Generations = settings.Generations
+            };
+
+            algorithm.Settings = newSettings;
+
+            settings = newSettings;
+            Context.AlgorithmsChanged = true;
         }
     }
 }

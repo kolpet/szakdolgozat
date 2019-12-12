@@ -63,6 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelTestBase.cs" />
+    <Compile Include="Model\AlgorithmModelTest.cs" />
+    <Compile Include="Model\MockPersistence.cs" />
+    <Compile Include="Model\ParticipantsModelTest.cs" />
+    <Compile Include="Model\PreferencesModelTest.cs" />
+    <Compile Include="Model\RunModelTest.cs" />
     <Compile Include="Model\SetupModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PersistenceTest.cs" />
@@ -91,6 +96,9 @@
       <Project>{dea7efb0-9ef6-4935-b3fa-c03b6a97e1c1}</Project>
       <Name>View</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -71,9 +71,12 @@ namespace Szakdolgozat.Model
 
         public void Load()
         {
-            ChangeGroup1Name(Context.Persistence.Data.Group1Name);
-            ChangeGroup2Name(Context.Persistence.Data.Group2Name);
-            ChangeParticipantNumber(Context.Persistence.Data.Participants.Count);
+            if(Context.Persistence.Data != null)
+            {
+                ChangeGroup1Name(Context.Persistence.Data.Group1Name);
+                ChangeGroup2Name(Context.Persistence.Data.Group2Name);
+                ChangeParticipantNumber(Context.Persistence.Data.Participants.Count);
+            }
         }
     }
 }

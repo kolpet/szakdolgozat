@@ -5,8 +5,10 @@ using System.Text;
 namespace Szakdolgozat.Persistence.Structures
 {
     [Serializable]
-    public abstract class AlgorithmSaveBase
+    public abstract class AlgorithmSaveBase : IAlgorithmSaveElement
     {
         public string AlgorithmName;
+
+        public virtual void Accept(IAlgorithmSaveVisitor visitor) { }
     }
 }
