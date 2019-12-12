@@ -9,14 +9,9 @@ namespace Szakdolgozat.ViewModel.Controls
 
         }
 
-        public AlgorithmOptionGenetic AcceptGetGeneticOption(IAlgorithmOptionVisitor visitor)
+        public void Accept(IAlgorithmOptionVisitor visitor)
         {
-            return visitor.GetGeneticOption(this);
-        }
-
-        public void AcceptReduceIndex(IAlgorithmOptionVisitor visitor)
-        {
-            Index--;
+            visitor.Visit(this);
         }
     }
 }

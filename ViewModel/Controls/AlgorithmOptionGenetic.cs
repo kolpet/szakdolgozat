@@ -146,14 +146,9 @@ namespace Szakdolgozat.ViewModel.Controls
             _generations = settings.Generations;
         }
 
-        public AlgorithmOptionGenetic AcceptGetGeneticOption(IAlgorithmOptionVisitor visitor)
+        public void Accept(IAlgorithmOptionVisitor visitor)
         {
-            return visitor.GetGeneticOption(this);
-        }
-
-        public void AcceptReduceIndex(IAlgorithmOptionVisitor visitor)
-        {
-            Index--;
+            visitor.Visit(this);
         }
     }
 }

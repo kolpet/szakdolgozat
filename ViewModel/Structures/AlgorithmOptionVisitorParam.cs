@@ -6,13 +6,13 @@ using Szakdolgozat.ViewModel.Controls;
 
 namespace Szakdolgozat.ViewModel.Structures
 {
-    public class AlgorithmOptionVisitor : IAlgorithmOptionVisitor
+    public class AlgorithmOptionVisitorParam : IAlgorithmOptionVisitor
     {
         private Action<AlgorithmOptionGaleShapley> _galeShapleyMethod;
 
         private Action<AlgorithmOptionGenetic> _geneticMethod;
 
-        public AlgorithmOptionVisitor(Action<AlgorithmOptionGaleShapley> galeShapleyMethod,
+        public AlgorithmOptionVisitorParam(Action<AlgorithmOptionGaleShapley> galeShapleyMethod,
             Action<AlgorithmOptionGenetic> geneticMethod)
         {
             _galeShapleyMethod = galeShapleyMethod;

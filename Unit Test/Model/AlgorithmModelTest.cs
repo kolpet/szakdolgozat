@@ -110,7 +110,17 @@ namespace Unit_Test.Model
             {
                 _model.UpdateAlgorithm(1, _settings);
                 _visitorParam = new AlgorithmVisitorParam(null,
-                    (x) => Assert.AreEqual(_settings, x.Settings));
+                    (x) =>
+                    {
+                        Assert.AreEqual(x.Settings.AbsoluteSelection, _settings.AbsoluteSelection);
+                        Assert.AreEqual(x.Settings.SelectionRate, _settings.SelectionRate);
+                        Assert.AreEqual(x.Settings.MutationChance, _settings.MutationChance);
+                        Assert.AreEqual(x.Settings.StablePairWeight, _settings.StablePairWeight);
+                        Assert.AreEqual(x.Settings.GroupHappinessWeight, _settings.GroupHappinessWeight);
+                        Assert.AreEqual(x.Settings.EgalitarianHappinessWeight, _settings.EgalitarianHappinessWeight);
+                        Assert.AreEqual(x.Settings.Generations, _settings.Generations);
+                        Assert.AreEqual(x.Settings.Size, _settings.Size);
+                    }); 
                 _visitorParam.Visit(_context.Algorithms[1].Element);
             }
             catch(Exception e)

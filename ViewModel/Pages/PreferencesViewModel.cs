@@ -16,6 +16,10 @@ namespace Szakdolgozat.ViewModel.Pages
         
         private IContext _context;
 
+        private List<int> Group1;
+
+        private List<int> Group2;
+
         public DelegateCommand RandomizeCommand { get; private set; }
 
         public DelegateCommand ToParticipantsCommand { get; private set; }
@@ -53,6 +57,8 @@ namespace Szakdolgozat.ViewModel.Pages
             {
                 _model.Initialize();
             }
+            Group1 = _context.Group1Participants.Select(x => x.ID).OrderBy(x => x).ToList();
+            Group2 = _context.Group2Participants.Select(x => x.ID).OrderBy(x => x).ToList();
             RefreshGrid();
         }
 
@@ -73,18 +79,20 @@ namespace Szakdolgozat.ViewModel.Pages
 
                 for(int j = 0; j < PreferenceGridColumns; j++)
                 {
+                    List<int> Group = _context.GetParticipants[i].Group == MarriageGroup.Group1 ? Group2 : Group1;
                     PreferenceGrid.Add(new PreferenceCell()
                     {
                         Id = preferenceList[i].ID,
                         X = j,
                         Y = i,
-                        Preferences = preferenceList[i].Preferences.Select(x => GetName(x)).ToList(),
-                        PreferenceValues = preferenceList[i].Preferences.ToList(),
-                        SelectedIndex = j
+                        Preferences = Group.Select(x => GetName(x)).ToList(),
+                        PreferenceValues = Group,
+                        SelectedIndex = Group.IndexOf(preferenceList[i].Preferences[j])
                     });
                     PreferenceGrid.Last().SelectedChanged += new EventHandler(PreferenceCell_SelectedChanged);
                 }
             }
+            OnPropertyChanged("PreferenceGrid");
         }
 
         private void PreferenceCell_SelectedChanged(object sender, EventArgs e)
@@ -107,7 +115,6 @@ namespace Szakdolgozat.ViewModel.Pages
         {
             _model.Randomize();
             RefreshGrid();
-            OnPropertyChanged("PreferenceGrid");
 
         }
 

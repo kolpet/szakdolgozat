@@ -18,9 +18,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private IContext _context;
 
-        private IAlgorithmOptionVisitor _visitor;
-
-        private List<IAlgorithmOptionElement> AlgorithmElements;
+        private AlgorithmOptionVisitorParam _visitor;
 
         public DelegateCommand DeleteAlgorithmCommand { get; private set; }
 
@@ -33,6 +31,8 @@ namespace Szakdolgozat.ViewModel.Pages
         public DelegateCommand ToRunCommand { get; private set; }
 
         public ObservableCollection<AlgorithmOptionBase> AlgorithmOptions { get; set; }
+
+        public List<IAlgorithmOptionElement> AlgorithmElements;
 
         public event EventHandler NextPage;
 
@@ -51,7 +51,6 @@ namespace Szakdolgozat.ViewModel.Pages
 
             AlgorithmElements = new List<IAlgorithmOptionElement>();
             AlgorithmOptions = new ObservableCollection<AlgorithmOptionBase>();
-            _visitor = new AlgorithmOptionVisitor();
         }
 
         public void RefreshPage()
@@ -168,7 +167,10 @@ namespace Szakdolgozat.ViewModel.Pages
 
         private void UpdateGeneticSettings(int index)
         {
-            IGeneticSettings settings = _visitor.GetGeneticOption(AlgorithmElements[index]);
+            IGeneticSettings settings = null;
+            _visitor = new AlgorithmOptionVisitorParam(null,
+                (x) => settings = x);
+            _visitor.Visit(AlgorithmElements[index]);
 
             if(settings != null)
             { 
@@ -195,10 +197,12 @@ namespace Szakdolgozat.ViewModel.Pages
             _model.DeleteAlgorithm(index);
             AlgorithmOptions.RemoveAt(index);
             AlgorithmElements.RemoveAt(index);
-            
+
+            _visitor = new AlgorithmOptionVisitorParam((x) => x.Index--,
+                (x) => x.Index--);
             for(int i = index; i < AlgorithmOptions.Count(); i++)
             {
-                _visitor.ReduceIndex(AlgorithmElements[i]);
+                _visitor.Visit(AlgorithmElements[i]);
             }
             OnPropertyChanged("AlgorithmOptions");
         }

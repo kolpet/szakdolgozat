@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="ModelTestBase.cs" />
     <Compile Include="Model\AlgorithmModelTest.cs" />
+    <Compile Include="Model\AppModelTest.cs" />
     <Compile Include="Model\MockPersistence.cs" />
     <Compile Include="Model\ParticipantsModelTest.cs" />
     <Compile Include="Model\PreferencesModelTest.cs" />
@@ -71,6 +72,11 @@
     <Compile Include="Model\SetupModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PersistenceTest.cs" />
+    <Compile Include="ViewModel\AlgorithmViewModelTest.cs" />
+    <Compile Include="ViewModel\ParticipantsViewModelTest.cs" />
+    <Compile Include="ViewModel\PreferencesViewModelTest.cs" />
+    <Compile Include="ViewModel\RunViewModelTest.cs" />
+    <Compile Include="ViewModel\SetupViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -97,9 +103,7 @@
       <Name>View</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

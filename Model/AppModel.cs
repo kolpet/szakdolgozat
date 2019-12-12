@@ -19,7 +19,9 @@ namespace Szakdolgozat.Model
 
         public string SaveDirectory { get => Context.Persistence.Directory; }
 
-        public AppModel(PersistenceBase persistence) : base(new ModelContext())
+        public AppModel(PersistenceBase persistence) : this(persistence, new ModelContext()) { }
+
+        public AppModel(PersistenceBase persistence, IModelContext context) : base(context)
         {
             Context.Persistence = persistence;
         }
