@@ -21,7 +21,7 @@ namespace Szakdolgozat.ViewModel
 
         private AppModel _appModel;
 
-        private IModelContext _context;
+        private IContext _context;
 
         public DelegateCommand NewCommand { get; private set; }
 
@@ -57,11 +57,11 @@ namespace Szakdolgozat.ViewModel
         public void NewProject(int defaultPage)
         { 
             ProjectViewModel projectViewModel = new ProjectViewModel(_context);
-            SetupViewModel setupViewModel = new SetupViewModel(_context);
-            ParticipantsViewModel participantsViewModel = new ParticipantsViewModel(_context);
-            PreferencesViewModel preferencesViewModel = new PreferencesViewModel(_context);
-            AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel(_context);
-            RunViewModel runViewModel = new RunViewModel(_context);
+            SetupViewModel setupViewModel = new SetupViewModel(_appModel.NewSetupModel(), _context);
+            ParticipantsViewModel participantsViewModel = new ParticipantsViewModel(_appModel.NewParticipantsModel(), _context);
+            PreferencesViewModel preferencesViewModel = new PreferencesViewModel(_appModel.NewPreferencesModel(), _context);
+            AlgorithmViewModel algorithmViewModel = new AlgorithmViewModel(_appModel.NewAlgorithmModel(), _context);
+            RunViewModel runViewModel = new RunViewModel(_appModel.NewRunModel(), _context);
 
             runViewModel.CheckSolution += new EventHandler<int>(OnNewResultWindow);
 
@@ -141,7 +141,7 @@ namespace Szakdolgozat.ViewModel
 
         private void OnNewResultWindow(object sender, int e)
         {
-            NewResultWindow?.Invoke(this, new NewResultWindowEventArgs(_context, e));
+            NewResultWindow?.Invoke(this, new NewResultWindowEventArgs(_appModel.NewResultModel(e), _context, e));
         }
 
         private void OnNewCommand()

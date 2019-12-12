@@ -19,7 +19,7 @@ namespace Szakdolgozat.Model
 
         public event EventHandler<AlgorithmEventArgs> AlgorithmFinished;
 
-        public RunModel()
+        public RunModel(IModelContext context) : base(context)
         {
             _running = new List<int>();
             _tasks = new List<Task>();

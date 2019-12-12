@@ -2,7 +2,7 @@
 
 namespace Szakdolgozat.Common
 {
-    public interface IModelContext
+    public interface IContext
     {
         bool SetupChanged { get; }
 
@@ -28,6 +28,6 @@ namespace Szakdolgozat.Common
 
         int TotalSize { get; }
 
-        int GroupSize { get;  }
+        int GroupSize { get; }
     }
 }

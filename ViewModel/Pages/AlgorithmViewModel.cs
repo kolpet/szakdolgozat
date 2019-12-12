@@ -16,7 +16,7 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private AlgorithmModel _model;
 
-        private IModelContext _context;
+        private IContext _context;
 
         private IAlgorithmOptionVisitor _visitor;
 
@@ -38,9 +38,9 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
-        public AlgorithmViewModel(IModelContext context)
+        public AlgorithmViewModel(AlgorithmModel model, IContext context)
         {
-            _model = new AlgorithmModel();
+            _model = model;
             _context = context;
 
             DeleteAlgorithmCommand = new DelegateCommand(param => OnDeleteAlgorithmCommand(Convert.ToInt32(param)));

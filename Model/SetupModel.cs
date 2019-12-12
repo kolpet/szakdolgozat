@@ -6,9 +6,9 @@ namespace Szakdolgozat.Model
     {
         public bool IsValid { get; private set; }
 
-        public SetupModel()
+        public SetupModel(IModelContext context) : base(context)
         {
-            Context.SetupChanged = true;
+            
         }
 
         public void Initialize()
@@ -18,6 +18,7 @@ namespace Szakdolgozat.Model
             Context.TotalSize = 10;
 
             IsValid = true;
+            Context.SetupChanged = true;
         }
 
         public void ChangeGroup1Name(string name)

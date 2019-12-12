@@ -13,15 +13,45 @@ namespace Szakdolgozat.Model
 {
     public partial class AppModel : ModelBase
     {
-        public IModelContext GetContext { get => Context; }
+        public IContext GetContext { get => Context; }
 
         public bool IsSaved { get => Context.Persistence.Saved; }
 
         public string SaveDirectory { get => Context.Persistence.Directory; }
 
-        public AppModel(PersistenceBase persistence)
+        public AppModel(PersistenceBase persistence) : base(new ModelContext())
         {
             Context.Persistence = persistence;
+        }
+
+        public SetupModel NewSetupModel()
+        {
+            return new SetupModel(Context);
+        }
+
+        public ParticipantsModel NewParticipantsModel()
+        {
+            return new ParticipantsModel(Context);
+        }
+
+        public PreferencesModel NewPreferencesModel()
+        {
+            return new PreferencesModel(Context);
+        }
+
+        public AlgorithmModel NewAlgorithmModel()
+        {
+            return new AlgorithmModel(Context);
+        }
+
+        public RunModel NewRunModel()
+        {
+            return new RunModel(Context);
+        }
+
+        public ResultModel NewResultModel(int i)
+        {
+            return new ResultModel(Context, i);
         }
 
         public void SaveData()

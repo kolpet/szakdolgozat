@@ -14,7 +14,7 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private PreferencesModel _model;
         
-        private IModelContext _context;
+        private IContext _context;
 
         public DelegateCommand RandomizeCommand { get; private set; }
 
@@ -34,9 +34,9 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
-        public PreferencesViewModel(IModelContext context)
+        public PreferencesViewModel(PreferencesModel model, IContext context)
         {
-            _model = new PreferencesModel();
+            _model = model;
             _context = context;
 
             RandomizeCommand = new DelegateCommand(param => OnRandomizeCommand());

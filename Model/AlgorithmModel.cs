@@ -13,7 +13,7 @@ namespace Szakdolgozat.Model
 {
     public class AlgorithmModel : ModelBase
     {
-        public AlgorithmModel()
+        public AlgorithmModel(IModelContext context) : base(context)
         {
             Context.Algorithms = new List<AlgorithmData>();
         }

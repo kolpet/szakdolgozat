@@ -14,7 +14,7 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private RunModel _model;
 
-        private IModelContext _context;
+        private IContext _context;
 
         public DelegateCommand RunAllCommand { get; private set; }
 
@@ -32,9 +32,9 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler<int> CheckSolution;
 
-        public RunViewModel(IModelContext context)
+        public RunViewModel(RunModel model, IContext context)
         {
-            _model = new RunModel();
+            _model = model;
             _context = context;
 
             RunAllCommand = new DelegateCommand(param => OnRunAllCommand()); 

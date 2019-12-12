@@ -10,7 +10,7 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private SetupModel _model;
 
-        private IModelContext _context;
+        private IContext _context;
         
         private int _participantNumber;
 
@@ -78,9 +78,9 @@ namespace Szakdolgozat.ViewModel.Pages
             }
         }
 
-        public SetupViewModel(IModelContext context)
+        public SetupViewModel(SetupModel model, IContext context)
         {
-            _model = new SetupModel();
+            _model = model;
             _context = context;
 
             ToProjectCommand = new DelegateCommand(param => OnToProjectCommand());

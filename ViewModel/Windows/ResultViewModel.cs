@@ -7,6 +7,7 @@ using Szakdolgozat.Model;
 using Szakdolgozat.Model.Structures;
 using Szakdolgozat.ViewModel.Controls;
 using Szakdolgozat.ViewModel.Structures;
+using Szakdolgozat.ViewModel.Events;
 
 namespace Szakdolgozat.ViewModel.Windows
 {
@@ -14,16 +15,18 @@ namespace Szakdolgozat.ViewModel.Windows
     {
         private ResultModel _model;
 
-        private IModelContext _context;
+        private IContext _context;
 
         public List<StablePairPanel> StablePairPanels { get; private set; }
 
         public string Name { get => _model.Name; }
 
-        public ResultViewModel(IModelContext context, int result)
+        public ResultViewModel(NewResultWindowEventArgs e)
         {
-            _model = new ResultModel(result);
-            _context = context;
+            _model = e.Model;
+            _context = e.Context;
+
+            int result = e.Result;
 
             StablePairPanels = new List<StablePairPanel>();
             Solution solution = _model.Solution;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Szakdolgozat.Common;
+using Szakdolgozat.Model;
 
 namespace Szakdolgozat.ViewModel.Events
 {
@@ -7,12 +8,15 @@ namespace Szakdolgozat.ViewModel.Events
     {
         private Action<object, int> openNewResultWindow;
 
-        public IModelContext Context { get; set; }
+        public ResultModel Model { get; set; }
+
+        public IContext Context { get; set; }
 
         public int Result { get; set; }
 
-        public NewResultWindowEventArgs(IModelContext context, int result)
+        public NewResultWindowEventArgs(ResultModel model, IContext context, int result)
         {
+            Model = model;
             Context = context;
             Result = result;
         }

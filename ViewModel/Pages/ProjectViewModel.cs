@@ -17,7 +17,7 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler DefaultPage;
 
-        public ProjectViewModel(IModelContext context)
+        public ProjectViewModel(IContext context)
         {
             ToSetupCommand = new DelegateCommand(param => OnToSetupCommand());
         }

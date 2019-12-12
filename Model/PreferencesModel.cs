@@ -9,7 +9,7 @@ namespace Szakdolgozat.Model
 {
     public class PreferencesModel : ModelBase
     {
-        public PreferencesModel()
+        public PreferencesModel(IModelContext context) : base(context)
         {
             Context.Priorities = new Priorities(new Dictionary<int, UnitSet>());
         }

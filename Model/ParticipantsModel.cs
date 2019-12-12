@@ -10,7 +10,7 @@ namespace Szakdolgozat.Model
 {
     public class ParticipantsModel : ModelBase
     {
-        public ParticipantsModel()
+        public ParticipantsModel(IModelContext context) : base(context)
         {
             Context.Participants = new List<Participant>();
         }

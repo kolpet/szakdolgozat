@@ -1,17 +1,16 @@
 ﻿using System;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model.Events;
 
 namespace Szakdolgozat.Model
 {
     public class ModelBase
     {
-        //Singleton context
-        private static Lazy<ModelContext> _context = new Lazy<ModelContext>(
-            () => new ModelContext());
-
-        protected ModelContext Context { get => _context.Value; }
+        protected IModelContext Context { get; private set; }
 
         public static event EventHandler<ModelErrorEventArgs> ModelError;
+
+        public ModelBase(IModelContext context) { Context = context; }
 
         protected void OnModelError(string message)
         {

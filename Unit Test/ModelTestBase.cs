@@ -1,20 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Szakdolgozat.Model;
 using Szakdolgozat.Model.Algorithm;
 using Szakdolgozat.Model.Evaluation;
 using Szakdolgozat.Model.Structures;
 
 namespace Unit_Test
 {
-    [TestClass]
-    public class ModelTest
+    public class ModelTestBase
     {
-        private Mock<GaleShapleyAlgorithm> mockGaleShapleyAlgorithm;
-        private Mock<GeneticAlgorithm> mockGeneticAlgorithm;
+        private AppModel _model;
 
-        [TestMethod]
         public void Initialize()
         {
+        }
+
+        public ModelContext GetContext()
+        {
+
+        }
+
+        [TestMethod]
+        public void Model_SetupModel()
+        {
+            Mock<SetupModel> model = new Mock<SetupModel>();
+
+            //model.Setup(m => m.)
         }
 
         [TestMethod]

@@ -13,7 +13,7 @@ namespace Szakdolgozat.ViewModel.Pages
     {
         private ParticipantsModel _model;
 
-        private IModelContext _context;
+        private IContext _context;
 
         public DelegateCommand ToSetupCommand { get; private set; }
 
@@ -33,9 +33,9 @@ namespace Szakdolgozat.ViewModel.Pages
 
         public event EventHandler PreviousPage;
 
-        public ParticipantsViewModel(IModelContext context)
+        public ParticipantsViewModel(ParticipantsModel model, IContext context)
         {
-            _model = new ParticipantsModel();
+            _model = model;
             _context = context;
 
             ToSetupCommand = new DelegateCommand(param => OnToSetupCommand());

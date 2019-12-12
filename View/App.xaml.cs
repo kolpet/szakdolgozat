@@ -28,7 +28,7 @@ namespace Szakdolgozat.View
         private void OpenNewResultWindow(object sender, NewResultWindowEventArgs e)
         {
             ResultView view = new ResultView();
-            ResultViewModel context = new ResultViewModel(e.Context, e.Result);
+            ResultViewModel context = new ResultViewModel(e);
 
             view.DataContext = context;
             view.Show();

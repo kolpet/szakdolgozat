@@ -15,7 +15,7 @@ namespace Szakdolgozat.Model
 
         public string Name { get => Context.Algorithms[_index].Name; }
 
-        public ResultModel(int index)
+        public ResultModel(IModelContext context, int index) : base(context)
         {
             _index = index;
         }
