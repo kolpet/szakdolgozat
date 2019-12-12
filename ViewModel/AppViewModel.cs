@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Windows;
-using Microsoft.Win32;
 using System.Collections.Generic;
+using System.IO;
+using Szakdolgozat.Common;
 using Szakdolgozat.Model;
 using Szakdolgozat.Model.Events;
 using Szakdolgozat.Persistence;
+using Szakdolgozat.ViewModel.Events;
 using Szakdolgozat.ViewModel.Pages;
 using Szakdolgozat.ViewModel.Structures;
-using System.IO;
-using Szakdolgozat.ViewModel.Events;
-using Szakdolgozat.Common;
 
 namespace Szakdolgozat.ViewModel
 {
@@ -32,6 +30,12 @@ namespace Szakdolgozat.ViewModel
         public DelegateCommand LoadCommand { get; private set; }
 
         public event EventHandler<NewResultWindowEventArgs> NewResultWindow;
+
+        public event EventHandler<FileDialogEventArgs> NewOpenFileDialog;
+
+        public event EventHandler<FileDialogEventArgs> NewSaveFileDialog;
+
+        public event EventHandler<string> NewMessageBox;
 
         public AppViewModel(): this(0)
         {
@@ -86,7 +90,7 @@ namespace Szakdolgozat.ViewModel
 
         private void Model_ErrorMessage(object sender, ModelErrorEventArgs e)
         {
-            MessageBox.Show(e.Message, "Hiba!");
+            NewMessageBox?.Invoke(this, e.Message);
         }
 
         private void Context_NextPage(object sender, EventArgs e)
@@ -139,6 +143,20 @@ namespace Szakdolgozat.ViewModel
             }
         }
 
+        public void Save(string path)
+        {
+            _appModel.SaveAsData(Path.GetFullPath(path));
+        }
+
+        public void Load(string path)
+        {
+            _appModel.LoadData(Path.GetFullPath(path));
+            foreach(IPageTurn page in _pages)
+            {
+                page.Load();
+            }
+        }
+
         private void OnNewResultWindow(object sender, int e)
         {
             NewResultWindow?.Invoke(this, new NewResultWindowEventArgs(_appModel.NewResultModel(e), _context, e));
@@ -163,39 +181,25 @@ namespace Szakdolgozat.ViewModel
 
         private void OnSaveAs()
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog
+            NewSaveFileDialog?.Invoke(this, new FileDialogEventArgs
             {
                 Title = "Fájl mentése...",
                 FileName = DateTime.Now.ToFileTime().ToString(),
-                Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs",
+                Filter = "Szöveges fájl (.txt)|*.txt",
                 RestoreDirectory = true,
                 InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
-            };
-
-            if(saveFileDialog.ShowDialog() == true)
-            {
-                _appModel.SaveAsData(Path.GetFullPath(saveFileDialog.FileName));
-            }
+            });
         }
 
         private void OnLoad()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
+            NewOpenFileDialog?.Invoke(this, new FileDialogEventArgs
             {
                 Title = "Fájl betöltése...",
-                Filter = "Szöveges fájl|*.txt|Excel fájl|.cvs",
+                Filter = "Szöveges fájl (.txt)|*.txt",
                 RestoreDirectory = true,
                 InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
-            };
-
-            if(openFileDialog.ShowDialog() == true)
-            {
-                _appModel.LoadData(Path.GetFullPath(openFileDialog.FileName));
-                foreach(IPageTurn page in _pages)
-                {
-                    page.Load();
-                }
-            }
+            });
         }
     }
 }

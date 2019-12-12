@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using Szakdolgozat.View.Windows;
 using Szakdolgozat.ViewModel;
@@ -12,25 +13,64 @@ namespace Szakdolgozat.View
     /// </summary>
     public partial class App : Application
     {
+        private AppView _view;
+
+        private AppViewModel _viewModel;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            AppView app = new AppView();
-            AppViewModel context = new AppViewModel();
+            _view = new AppView();
+            _viewModel = new AppViewModel();
 
-            context.NewResultWindow += new EventHandler<NewResultWindowEventArgs>(OpenNewResultWindow);
+            _viewModel.NewResultWindow += new EventHandler<NewResultWindowEventArgs>(NewResultWindow);
+            _viewModel.NewSaveFileDialog += new EventHandler<FileDialogEventArgs>(NewSaveFileDialog);
+            _viewModel.NewOpenFileDialog += new EventHandler<FileDialogEventArgs>(NewOpenFileDialog);
 
-            app.DataContext = context;
-            app.Show();
+            _view.DataContext = _viewModel;
+            _view.Show();
         }
 
-        private void OpenNewResultWindow(object sender, NewResultWindowEventArgs e)
+        private void NewOpenFileDialog(object sender, FileDialogEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = e.Title,
+                Filter = e.Filter,
+                RestoreDirectory = e.RestoreDirectory,
+                InitialDirectory = e.InitialDirectory,
+            };
+
+            if(openFileDialog.ShowDialog() == true)
+            {
+                _viewModel.Load(openFileDialog.FileName);
+            }
+        }
+
+        private void NewSaveFileDialog(object sender, FileDialogEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Title = e.Title,
+                FileName = e.FileName,
+                Filter = e.Filter,
+                RestoreDirectory = e.RestoreDirectory,
+                InitialDirectory = e.InitialDirectory,
+            };
+
+            if(saveFileDialog.ShowDialog() == true)
+            {
+                _viewModel.Save(saveFileDialog.FileName);
+            }
+        }
+
+        private void NewResultWindow(object sender, NewResultWindowEventArgs e)
         {
             ResultView view = new ResultView();
-            ResultViewModel context = new ResultViewModel(e);
+            ResultViewModel viewModel = new ResultViewModel(e);
 
-            view.DataContext = context;
+            view.DataContext = viewModel;
             view.Show();
         }
     }
