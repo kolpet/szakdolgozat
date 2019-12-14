@@ -185,7 +185,7 @@ namespace Szakdolgozat.ViewModel
             {
                 Title = "Fájl mentése...",
                 FileName = DateTime.Now.ToFileTime().ToString(),
-                Filter = "Szöveges fájl (.txt)|*.txt",
+                Filter = "Projekt fájl (.save)|*.save",
                 RestoreDirectory = true,
                 InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
             });
@@ -196,7 +196,7 @@ namespace Szakdolgozat.ViewModel
             NewOpenFileDialog?.Invoke(this, new FileDialogEventArgs
             {
                 Title = "Fájl betöltése...",
-                Filter = "Szöveges fájl (.txt)|*.txt",
+                Filter = "Projekt fájl (.save)|*.save",
                 RestoreDirectory = true,
                 InitialDirectory = Path.GetFullPath(_appModel.SaveDirectory)
             });

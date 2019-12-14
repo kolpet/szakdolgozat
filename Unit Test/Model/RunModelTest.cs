@@ -28,9 +28,9 @@ namespace Unit_Test.Model
         [TestInitialize]
         public void TestInitialize()
         {
-            StablePairsEvaluation stablePairsEvaluation = new StablePairsEvaluation();
-            GroupHappinessEvaluation groupHappinessEvaluation = new GroupHappinessEvaluation();
-            EgalitarianHappinessEvaluation egalitarianHappinessEvaluation = new EgalitarianHappinessEvaluation();
+            stablePairsEvaluation = new StablePairsEvaluation();
+            groupHappinessEvaluation = new GroupHappinessEvaluation();
+            egalitarianHappinessEvaluation = new EgalitarianHappinessEvaluation();
         }
 
         /*[TestMethod]
