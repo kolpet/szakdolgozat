@@ -12,6 +12,21 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <StackPanel Width="auto">
+            <TextBlock TextWrapping="Wrap" Margin="10" FontSize="14">
+                A stabil házasítási probléma az egyik legjobban ismert stabil párosítási probléma, amire 1962-ben David Gale és Lloyd Shapley biztos módszert találtak arra, hogy bármilyen házasítási problémára létezik és megadható stabil párosítás. Ezt nevezzük ma a Gale-Shapley Algoritmusnak, ami azóta klasszikussá vált módszer. Alvin Roth később továbbterjesztette a gyakorlati hasznát, ennek eredményeként 2012-ben Gale és Roth Nobel-díjban részesültek
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="10" FontSize="14">
+                A genetikus algoritmusok egy olyan speciális kereső algoritmus, amely a valódi evolúciós elméletet veszi alapul az egyes feladatokra való megoldás keresésében. Az ötlet John Holland 1960-as kutatásaiból ered, de nem szerzett nagy hírnevet a 90-es évekig. Használatuk akkor ajánlatos, amikor a determinisztikus módszerek túl költségessé válnak, például az utazó ügynök esete. Gyakorlati haszna
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="10" FontSize="14">
+                Ezeknek a közös használatára már volt példa, Aldershof és Carducci 1999-ben a stabil házasítás és Kórház/Rezidens párok problémára modelleztek genetikus algoritmust. A céljukat elérték, mert a stabil házasításban megtaláltak minden stabil párosítást és találtak rezidens-optimális megoldást, de kórház-optimális megoldás nem született.
+            </TextBlock>
+            <TextBlock TextWrapping="Wrap" Margin="10" FontSize="14">
+                A szakdolgozat célja, hogy megvizsgálja a mesterséges intelligencia használatának lehetőségét a stabil házasítási probléma terén, erre egy alternatív, nem determinisztikus módszert adni és különböző tesztesetekben összevetni az eredményeit a Gale-Shapley algoritmuséval.
+            </TextBlock>
+        </StackPanel>
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

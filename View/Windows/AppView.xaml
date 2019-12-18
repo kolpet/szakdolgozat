@@ -1,4 +1,4 @@
-﻿<Window x:Class="Szakdolgozat.View.AppView"
+﻿<Window x:Class="Szakdolgozat.View.Windows.AppView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:pages="clr-namespace:Szakdolgozat.ViewModel.Pages;assembly=ViewModel"

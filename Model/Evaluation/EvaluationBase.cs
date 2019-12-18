@@ -11,7 +11,7 @@ namespace Szakdolgozat.Model.Evaluation
     /// A class to evaluate a solution with a set method
     /// </summary>
     /// <typeparam name="Score">The type of the evaluation's result</typeparam>
-    public abstract class IEvaluation<Score>
+    public abstract class EvaluationBase<Score>
     {
         /// <summary>
         /// Evaluates the solution with the set method

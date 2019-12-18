@@ -40,7 +40,7 @@ namespace Szakdolgozat.ViewModel.Windows
                     SecondId = pair.Item2,
                     WrittenPair = (firstName != "" && secondName != "") ? firstName + " - " + secondName : "",
                     Color = new SolidColorBrush(_model.IsStablePair(pair) ? Colors.LightGreen : Colors.OrangeRed),
-                    Statistics = "Boldogság: " + _model.GetGroupHappiness(pair) + ", Egyenlő boldogság: " + _model.GetEgalitarianGroupHappiness(pair)
+                    Statistics = "Boldogság: " + _model.GetPairHappiness(pair) + ", Egyenlő boldogság: " + _model.GetEgalitarianPairHappiness(pair)
 
                 };
                 StablePairPanels.Add(panel);

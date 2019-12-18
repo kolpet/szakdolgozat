@@ -10,7 +10,7 @@ namespace Szakdolgozat.Model.Evaluation
     /// <summary>
     /// A class to calculate the amount of stable pairs in a solution
     /// </summary>
-    public class StablePairsEvaluation : IEvaluation<int>
+    public class StablePairsEvaluation : EvaluationBase<int>
     {
         /// <summary>
         /// Returns the amount of stable pairs in a solution

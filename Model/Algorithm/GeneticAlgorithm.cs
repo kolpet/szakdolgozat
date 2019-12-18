@@ -207,7 +207,7 @@ namespace Szakdolgozat.Model.Algorithm
             EgalitarianHappinessEvaluation egalitarianHappinessEvaluation = new EgalitarianHappinessEvaluation();
 
             return stablePairsEvaluation.Evaluate(_stableMarriage, solution) * Settings.StablePairWeight +
-                   groupHappinessEvaluation.Evaluate(_stableMarriage, solution) * Settings.GroupHappinessWeight +
+                   groupHappinessEvaluation.Evaluate(_stableMarriage, solution) * Settings.GroupHappinessWeight -
                    egalitarianHappinessEvaluation.Evaluate(_stableMarriage, solution) * Settings.EgalitarianHappinessWeight;
         }
 

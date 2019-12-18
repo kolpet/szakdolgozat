@@ -10,7 +10,7 @@ namespace Szakdolgozat.Model.Evaluation
     /// <summary>
     /// A class to calculate the egalitarian group happiness cost of a solution 
     /// </summary>
-    public class EgalitarianHappinessEvaluation : IEvaluation<double>
+    public class EgalitarianHappinessEvaluation : EvaluationBase<double>
     {
         /// <summary>
         /// Returns the egalitarian group happiness cost of the solution
@@ -28,7 +28,7 @@ namespace Szakdolgozat.Model.Evaluation
                              stableMarriage.Priorities[pair.Item2].FindIndex(x => x == pair.Item1);
             }
 
-            return Math.Abs(happiness / stableMarriage.TotalSize);
+            return Math.Abs(happiness / stableMarriage.GroupSize);
         }
     }
 }

@@ -55,13 +55,13 @@ namespace Szakdolgozat.Model
             return true;
         }
 
-        public double GetGroupHappiness(Tuple<int, int> pair)
+        public double GetPairHappiness(Tuple<int, int> pair)
         {
             return Priorities[pair.Item1].FindIndex(x => x == pair.Item2) +
                    Priorities[pair.Item2].FindIndex(x => x == pair.Item1) + 2;
         }
 
-        public double GetEgalitarianGroupHappiness(Tuple<int, int> pair)
+        public double GetEgalitarianPairHappiness(Tuple<int, int> pair)
         {
             return Priorities[pair.Item1].FindIndex(x => x == pair.Item2) -
                    Priorities[pair.Item2].FindIndex(x => x == pair.Item1);

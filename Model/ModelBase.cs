@@ -4,7 +4,7 @@ using Szakdolgozat.Model.Events;
 
 namespace Szakdolgozat.Model
 {
-    public class ModelBase
+    public abstract class ModelBase
     {
         protected IModelContext Context { get; private set; }
 

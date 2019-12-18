@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Szakdolgozat.ViewModel.Structures
+namespace Szakdolgozat.ViewModel
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -16,7 +16,7 @@ namespace Szakdolgozat.Model
 
         private bool _algorithmsChanged;
 
-        //Hidden by interface
+        //Hidden by IContext
         public PersistenceBase Persistence { get; set; }
 
         public StableMarriage StableMarriage { get; set; }
@@ -27,7 +27,7 @@ namespace Szakdolgozat.Model
 
         public List<Participant> Participants { get; set; }
 
-        //Visible from interface
+        //Visible from all interfaces
         public bool SetupChanged { get; set; }
 
         public bool ParticipantsChanged { get => _participantsChanged || SetupChanged; set => _participantsChanged = value; }

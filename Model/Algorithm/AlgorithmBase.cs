@@ -51,7 +51,7 @@ namespace Szakdolgozat.Model.Algorithm
         /// <typeparam name="Score">The type of scoring the evaluation uses</typeparam>
         /// <param name="evaluationMethod">The evaluation method used to score the solution</param>
         /// <returns>The score given by the evaluation method</returns>
-        public Score Evaluate<Score>(IEvaluation<Score> evaluationMethod)
+        public Score Evaluate<Score>(EvaluationBase<Score> evaluationMethod)
         {
             if(_solution == null)
             {

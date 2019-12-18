@@ -26,7 +26,7 @@ namespace Unit_Test
         [TestMethod]
         public void Evaluation_IEvaluation()
         {
-            Mock<IEvaluation<int>> mockIEvaluation = new Mock<IEvaluation<int>>();
+            Mock<EvaluationBase<int>> mockIEvaluation = new Mock<EvaluationBase<int>>();
             Mock<StableMarriage> mockStableMarriage = new Mock<StableMarriage>();
             Mock<Solution> mockSolution = new Mock<Solution>();
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Szakdolgozat.View
+namespace Szakdolgozat.View.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
